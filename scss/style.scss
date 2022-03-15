@@ -1,0 +1,84 @@
+@import "../scss/variable_overrides.scss";
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+#logo {
+  color: #d04f4f;
+  font-family: "DM Sans", sans-serif;
+  font-weight: 700;
+}
+
+#barreRecherche {
+  position: relative;
+}
+#rechercher {
+  position: absolute;
+  right: 0.5rem;
+  font-weight: bold;
+}
+#recherche::placeholder {
+  background-color: #e7e7e7;
+  color: black !important;
+}
+
+#recherche,
+.card-title {
+  background-color: #e7e7e7;
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+}
+#search {
+  color: white;
+}
+/**font-family: 'DM Sans', sans-serif;
+font-family: 'Lato', sans-serif;
+font-family: 'Roboto', sans-serif;*/
+
+.container-fluid {
+  padding: 0;
+}
+.card {
+  overflow: hidden;
+  font-size: 0.8rem;
+  height: 100%;
+}
+.card-img-top {
+  background-color: #c7bebe;
+  border: none;
+  height: 160px;
+}
+
+.card-body {
+  background-color: #e7e7e7;
+  overflow: hidden;
+  height: 200px;
+}
+
+.card-title {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+}
+.time,
+.ingredient-container {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+}
+.minutes {
+  font-size: 18px;
+}
+.card-text {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  height: 110px;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+}
+.card ul {
+  padding: 0;
+  list-style: none;
+}

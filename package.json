@@ -1,0 +1,24 @@
+{
+  "name": "c",
+  "version": "1.0.0",
+  "description": "",
+  "main": "recipes.js",
+  "dependencies": {
+    "bootstrap": "^5.1.3",
+    "bootstrap-icons": "^1.8.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Christelle74/ChristellePhilippe_7_08032022.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Christelle74/ChristellePhilippe_7_08032022/issues"
+  },
+  "homepage": "https://github.com/Christelle74/ChristellePhilippe_7_08032022#readme"
+}
