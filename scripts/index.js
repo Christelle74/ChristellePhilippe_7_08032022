@@ -1,12 +1,21 @@
-import { recipes } from "../data/recipes.js";
+/**
+ * récupération des données via le fetch
+ * affiche de la galerie de recettes
+ */
 
-console.log(recipes);
+const fetchRecipes = async () => {
+  await fetch("data/recipes.json")
+    .then((res) => res.json())
+    .then((data) => {
+      recipes = data.recipes;
+      console.log(recipes);
+    });
+};
 
-function getRecipes() {
-  // This is an array so we have to loop through it
+const recipesGallery = async () => {
+  await fetchRecipes();
   let output = "";
-
-  recipes.forEach(function (recipe) {
+  recipes.forEach((recipe) => {
     output += `
       <article class="card col-lg-4 col-md-6 col-sm-12 g-5 border-0">
         <img class="card-img-top"  src="" alt="" />
@@ -23,32 +32,23 @@ function getRecipes() {
             </div>
         
             <div class="recipe d-flex flex-row justify-content-between gap-2 ">
-                <ul class="ingredient-container col-5 mb-0">${recipe.ingredients.map(
-                  (element) =>
-                    `
+                <ul class="ingredient-container col-5 mb-0">${recipe.ingredients
+                  .map(
+                    (element) =>
+                      `
                 <li>
                     <span>${element.ingredient}</span> : ${
-                      "quantity" in element ? element.quantity : ""
-                    } ${"unit" in element ? element.unit : ""}
+                        "quantity" in element ? element.quantity : ""
+                      } ${"unit" in element ? element.unit : ""}
                 `
-                )}</li>
+                  )
+                  .join("")}</li>
                 </ul>
                 <p class="card-text col-7 m-0   ">${recipe.description}</p>
             </div>
         </div>
-    </article>
-        
- `;
+    </article> `;
   });
   document.getElementById("output").innerHTML = output;
-}
-getRecipes();
-
-/*
-var ingredients = [];
-
-function getIngredients() {
-  recipe.ingredients.forEach((ingredient) => recipe.ingredients);
-  console.log(ingredients);
-}
-getIngredients();*/
+};
+recipesGallery();

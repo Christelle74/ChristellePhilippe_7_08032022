@@ -15,6 +15,7 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@700&family=Lato:wght@400;700&family=Roboto&display=swap"
       rel="stylesheet"
     />
+    <link rel="icon" type="image/svg" href="assets/favicon.svg" />
 
     <!-- Bootstrap CSS 
     <link
@@ -31,24 +32,30 @@
   </head>
 
   <body>
-    <div class="container-fluid p-5 pb-3">
-      <!--logo-->
-      <div class="row align-items-center">
-        <div class="col text-sm-center">
-          <img id="logo" src="assets/logo.svg" alt="" />
+    <header>
+      <div class="container-fluid p-5 pb-3">
+        <!--logo-->
+        <div class="row align-items-center">
+          <div class="col text-sm-center">
+            <img id="logo" src="assets/logo.svg" alt="" />
+          </div>
         </div>
-      </div>
 
-      <form id="search" class="py-3"> 
-        <!--barre de recherche principale-->
-        <div id="barreRecherche" class="input-group py-3">
-          <input
-            type="text"
-            class="form-control px-4 border-0 "
-            placeholder="Rechercher une recette"
-            name="recherche"
-            id="recherche"
-          />
+        <form id="search" class="py-3">
+          <!--barre de recherche principale-->
+          <div id="barreRecherche" class="input-group py-3">
+            <input
+              type="text"
+              class="form-control px-4 border-0"
+              placeholder="Rechercher une recette"
+              name="recherche"
+              id="recherche"
+            />
+            <label id="rechercher" for="recherche">
+              <img src="assets/search.svg" alt="" />
+            </label>
+          </div>
+          <!--
           <div class="input-group-append">
             <button
               class="btn btn-outline"
@@ -56,60 +63,82 @@
               type="button"
               id="rechercher"
             >
-              <img  src="assets/search.svg" alt="" />
+              
             </button>
-          </div>
-        </div>
+          </div>-->
 
-        <!--3 zones de recherches-->
-        <div class="form-group row align-items-start">
-          <div class="input-goup col-lg-2 col-md-3 col-sm-4">
-            <input
-              class="bg-primary form-control shadow-sm"
-              type="search"
-              placeholder="Ingrédients"
-              id="search"
-            />
-          </div>
-
-          <div class="input-goup col-lg-2 col-md-3 col-sm-4">
-            <input
-              class="bg-success form-control shadow-sm"
-              type="search"
-              placeholder="Appareils"
-              id="search"
-            />
-          </div>
-
-          <div class="input-goup col-lg-2 col-md-3 col-sm-4">
-            <input
-              class="bg-danger form-control shadow-sm"
-              type="search"
-              placeholder="Ustensils"
-              id="search"
-            />
-          </div>
-        </div>
-      </form>
-
-      <!--zone des recettes-->
-
-      <main class="container-fluid mt-0">
-       
-          <div class="row m-0 p-0 d-flex align-items-center ">
+          <!--3 zones de recherches-->
+          <div class="form-group row align-items-start container-fluid">
             <div
-              id="output"
-              class="row "
-            ></div>
-          </div>
-        
-      </main>
+              id="ingredientsList"
+              class="input-goup col-lg-2 col-md-3 col-sm-4"
+            >
+              <input
+                class="bg-primary form-control shadow-sm"
+                type="search"
+                placeholder="Ingrédients"
+                id="ingredients"
+              />
+            </div>
 
-      
+            <div
+              id="applianceList"
+              class="input-goup col-lg-2 col-md-3 col-sm-4"
+            >
+              <input
+                class="bg-success form-control shadow-sm"
+                type="search"
+                placeholder="Appareils"
+                id="appareils"
+              />
+              <span class="table-items bg-success">
+                <ul class="list-inline">
+                  <li class="list-inline-item">item</li>
+                  <li class="list-inline-item">item</li>
+                  <li class="list-inline-item">item</li>
+                  <li class="list-inline-item">item</li>
+                  <li class="list-inline-item">item</li>
+                  <li class="list-inline-item">item</li>
+                  <li class="list-inline-item">item</li>
+                  <li class="list-inline-item">item</li>
+                  <li class="list-inline-item">item</li>
+                  <li class="list-inline-item">item</li>
+                  <li class="list-inline-item">item</li>
+                  <li class="list-inline-item">item</li>
+                </ul>
+              </span>
+            </div>
+
+            <div
+              id="ustensilsList"
+              class="input-goup col-lg-2 col-md-3 col-sm-4"
+            >
+              <input
+                class="bg-danger form-control shadow-sm"
+                type="search"
+                placeholder="Ustensils"
+                id="ustensils"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+    </header>
+
+    <!--zone des recettes-->
+
+    <main class="container-fluid mt-0">
+      <div class="row m-0 p-0 d-flex align-items-center">
+        <div id="output" class="row p-0"></div>
+      </div>
+    </main>
 
     <!--scripts-->
-    <script type="module" src="scripts/index.js"></script>
+    <script src="scripts/index.js"></script>
+    <script src="scripts/displayRecipes.js"></script>
+    <!--<script type="module" src="scripts/principalSearch.js"></script>
     <script type="module" src="scripts/ingredients.js"></script>
+    <script type="module" src="scripts/ustensils.js"></script>-->
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script

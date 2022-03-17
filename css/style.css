@@ -11110,6 +11110,10 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+* {
+  max-width: 1440px;
+}
+
 #logo {
   color: #d04f4f;
   font-family: "DM Sans", sans-serif;
@@ -11122,13 +11126,17 @@ textarea.form-control-lg {
 
 #rechercher {
   position: absolute;
-  right: 0.5rem;
+  right: 1rem;
+  top: 2rem;
   font-weight: bold;
+  z-index: 10;
+  cursor: pointer;
 }
 
 #recherche::placeholder {
   background-color: #e7e7e7;
-  color: black !important;
+  color: #000000 !important;
+  opacity: 0.25;
 }
 
 #recherche,
@@ -11145,6 +11153,23 @@ textarea.form-control-lg {
 /**font-family: 'DM Sans', sans-serif;
 font-family: 'Lato', sans-serif;
 font-family: 'Roboto', sans-serif;*/
+.table-items {
+  display: block;
+}
+
+.list-group {
+  display: flex;
+  flex-direction: row;
+  max-width: 300px;
+  max-height: 250px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.list-group {
+  width: 500px;
+}
+
 .container-fluid, .container-sm, .container-md, .container-lg, .container-xl, .container-xxl {
   padding: 0;
 }

@@ -1,4 +1,4 @@
-export const recipes = [
+const recipes = [
   {
     id: 1,
     name: "Limonade de Coco",
@@ -31,7 +31,7 @@ export const recipes = [
     description:
       "Mettre les glaçons à votre goût dans le blender, ajouter le lait, la crème de coco, le jus de 2 citrons et le sucre. Mixer jusqu'à avoir la consistence désirée",
     appliance: "Blender",
-    ustensils: ["cuillère à Soupe", "verres", "presse citron"],
+    ustensils: ["cuillère à soupe", "verres", "presse citron"],
   },
   {
     id: 2,
@@ -262,7 +262,7 @@ export const recipes = [
     description:
       "Etaler la pate dans les moules à tartelette. Faire cuire la pate 30 minutes. Découper le chocolat en morceau et le faire chauffer, y ajouter la crême liquide, ajouter le beurre et remuer jusqu'à avoir une pâte homogène. Verser la pate sur les tartelettes. Couper les fraises en 2 et les positionner sur ",
     appliance: "Four",
-    ustensils: ["moule à tartelettes (6)", "casserolle"],
+    ustensils: ["moule à tartelettes (6)", "casserole"],
   },
   {
     id: 8,
@@ -303,7 +303,7 @@ export const recipes = [
     description:
       "Hachez les noix grossièrement. Faire fondre le chocolat avec le beurre. Mélanger les oeuf et le sucre et mélanger au chocolat. Ajouter la farine. Mélanger afin d'avoir quelque chose d'homogène puis incorporer les noix. Verser la préparation dans un moule de préférence rectangulaire. Cuire 2O à 25 minutes à 180°. Sortez du four et attendez quelques minutes pour démouler. Servir avec une boule de glace pour plus de gourmandise.",
     appliance: "Four",
-    ustensils: ["moule à gateaux", "casserolle"],
+    ustensils: ["moule à gateaux", "casserole"],
   },
   {
     id: 9,
@@ -372,7 +372,7 @@ export const recipes = [
     description:
       "Commencer par cuire les pommes de terre dans l'eau bouillante. Puis epluchez les et coupez les en rondelles. Emincer les oignons puis les faire dorer dans du beurre. Ajouter le jambon fumé coupé en en morceaux ainsi que les pommes de terres. Salez, poivrez à votre gout ( et celui de vos convives ) Laissez cuisiner durant environ 10 minutes puis ajouter le vin blanc. Après 5 minutes, mettre le tout dans un plat à gratin. Coupez le rebelochon, soit en tranches, soit le couper en 2 dans le sens de l'épaisseur et recouvrir les pommes de terre. Cuire au four (environ 220°) durant 25 minutes. C'est prêt !",
     appliance: "Four",
-    ustensils: ["plat à gratin", "couteau", "Économe"],
+    ustensils: ["plat à gratin", "couteau", "économe"],
   },
   {
     id: 11,
@@ -518,7 +518,7 @@ export const recipes = [
     description:
       "Mélanger la farine et les oeufs, faire fondre 25 grammes de beurre et ajouter à la pâte. Ajouter du sel. Laisser reposer 1 heure. Faire les galettes et laisser refroidire. Faire chauffer les saucisses avec du beurre et l'oignon. Enrouler les saucisses dans les crêpes avec une partie du fromage. Mettre le reste du fromage à raclette par dessus les crêpes. Passer four pendant 20 minutes",
     appliance: "Four",
-    ustensils: ["poelle à frire", "couteau"],
+    ustensils: ["poele à frire", "couteau"],
   },
   {
     id: 15,
@@ -766,7 +766,7 @@ export const recipes = [
     description:
       "Cuisiner la viande hachée dans une poelle à frire. Dans une autre faire cuire les oignons découpés en fins dés avec un peu de beurre. Ajouter du vin rouge. Mélanger les oigons avec la viande hachée. Faire cuire les pates le temps indiqué sur le paquet. Ajouter le coulis de tomates à la viande hachée. Une fois que les pates sont cuites, ajouter la crème fraiche à la viande hachée. Serivir.",
     appliance: "Casserolle.",
-    ustensils: ["Cuillère en bois", "louche", "couteau"],
+    ustensils: ["cuillère en bois", "louche", "couteau"],
   },
   {
     id: 22,
@@ -802,7 +802,7 @@ export const recipes = [
     description:
       "Faire fondre le chocolat et le beurre au bain marie. Dans un saladier battre les oeufs avec le sucre jusqu'à obtenir une texture de type mousse. Ajouter la farine ainsi que le mélange de beurre et chocolat fondu. Beurrez le moule à gateaux. Mettre au four préchauffé à 200° puis faites chauffer pendant 15 minutes. C'est prêt. Servir avec une boule de glace ou une crême dessert.",
     appliance: "Four",
-    ustensils: ["moule à gateaux", "fouet", "casserolle"],
+    ustensils: ["moule à gateaux", "fouet", "casserole"],
   },
   {
     id: 23,
@@ -1022,7 +1022,7 @@ export const recipes = [
     description:
       "Emincer les blanc de poireaux et les faire chauffer dans 25 grammes de beurre. AJouter les pommes de terres coupées en morceaux. Ajouter l'eau et laisser mijoter pour 45 minutes. Chauffer l'oseille avec le beurre restant puis incorporer le tout. Mixez. Ajoutez la crème. Bon appetit.",
     appliance: "Mixer",
-    ustensils: ["casserolle", "couteau"],
+    ustensils: ["casserole", "couteau"],
   },
   {
     id: 29,
@@ -1080,7 +1080,7 @@ export const recipes = [
     description:
       "Mettre tous les ingrédients dans une cocotte. ajouter de l'eau pour recouvrir l'ensemble et laisser cuirre à petit feur pour 1 heure. Passer au mixer. Salez, poivrez. C'est prêt",
     appliance: "Mixer",
-    ustensils: ["casserolle", "cuillère en bois"],
+    ustensils: ["casserole", "cuillère en bois"],
   },
   {
     id: 31,
@@ -1115,7 +1115,7 @@ export const recipes = [
     description:
       "Découper en cubes les carottes et pommes de terre. Faire revenir dans du beurre. Ajouter les lardons, une fois les lardons dorés, ajouter un grand verre d'eau. Ajouter les petit poids et les haricots verts ( tous deux pré cuits ). Ajouter Sel, poivre, thyms et laurier",
     appliance: "Poële",
-    ustensils: ["Couteau", "économe"],
+    ustensils: ["couteau", "économe"],
   },
   {
     id: 32,
@@ -1342,7 +1342,7 @@ export const recipes = [
     description:
       "Couper les courgettes dans le sens de la longueur. Vider les courgette dans un saladier. Réserver.Faire revenir la chair des courgettes dans 25cl d'huile d'olive. Ajouter l'oignon puis la viande hachée. Mettre la farce dans les courgettes. Ajouter le coulis de tomates. Mettre au four pendant 30 minutes. Avant la fin de la cuisson ajouter le fromage rapé",
     appliance: "Four",
-    ustensils: ["couteau", "cuillère en bois", "Poelle à frire"],
+    ustensils: ["couteau", "cuillère en bois", "poele à frire"],
   },
   {
     id: 38,
@@ -1373,7 +1373,7 @@ export const recipes = [
     description:
       "Fouettez les oeufs, le sucre et le lait. tremper les tranches de pain. Le cuire au four pendant environ 10 minutes à 180°. Servir",
     appliance: "Four",
-    ustensils: ["fouet", "bol", "Cuillère à Soupe"],
+    ustensils: ["fouet", "bol", "cuillère à soupe"],
   },
   {
     id: 39,
