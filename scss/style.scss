@@ -10,7 +10,7 @@
   font-weight: 700;
 }
 
-#barreRecherche {
+#searchBar {
   position: relative;
 }
 #rechercher {
@@ -41,22 +41,87 @@
 font-family: 'Lato', sans-serif;
 font-family: 'Roboto', sans-serif;*/
 
+main .row {
+  --bs-gutter-x: 0rem;
+}
 .table-items {
   display: block;
 }
-.list-group {
+/*.list-group {
   display: flex;
   flex-direction: row;
-  max-width: 300px;
+  max-width: 500px;
   max-height: 250px;
   overflow-y: auto;
   overflow-x: hidden;
-}
+}*/
+
 .list-group {
-  width: 500px;
+  display: none;
+  display: flex;
+  flex-wrap: wrap;
+  writing-mode: vertical-lr;
+  z-index: 3;
+  max-width: 700px;
+  max-height: 400px;
+  overflow: hidden;
 }
-.container-fluid {
+
+.list-items {
+  cursor: pointer;
+  width: 33%;
+  writing-mode: horizontal-tb;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.form-group {
   padding: 0;
+  margin-top: 2rem;
+}
+.input-group {
+  padding: 0 !important;
+  display: flex;
+
+  justify-content: space-around;
+}
+option {
+  cursor: pointer;
+}
+
+#selectedTag {
+  margin: 0rem;
+  margin-bottom: 1rem !important;
+  display: none;
+}
+
+.btn {
+  text-align: center;
+  vertical-align: middle;
+  color: white;
+  display: inline-block;
+  margin: 5px 0;
+  padding: 0 !important;
+  display: flex;
+  justify-content: space-around;
+}
+.btn img {
+  margin-left: 10px !important;
+}
+.input {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.chevron {
+  position: absolute;
+  right: 0.5rem;
+  top: 1rem;
+}
+/*recettes*/
+.container {
+  max-width: 1440px;
 }
 .card {
   overflow: hidden;
@@ -67,6 +132,9 @@ font-family: 'Roboto', sans-serif;*/
   background-color: #c7bebe;
   border: none;
   height: 160px;
+  object-fit: cover;
+
+  width: 100%;
 }
 
 .card-body {
@@ -99,8 +167,4 @@ font-family: 'Roboto', sans-serif;*/
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 12px;
-}
-.card ul {
-  padding: 0;
-  list-style: none;
 }
