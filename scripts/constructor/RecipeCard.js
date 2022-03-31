@@ -48,7 +48,7 @@ class RecipesCard {
                     (element) =>
                       `
                 <li>
-                    <span>${element.ingredient}</span> : ${
+                    ${element.ingredient} : ${
                         "quantity" in element ? element.quantity : ""
                       } ${"unit" in element ? element.unit : ""}
                 `

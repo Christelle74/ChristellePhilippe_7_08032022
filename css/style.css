@@ -11110,8 +11110,9 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
-* {
+body {
   max-width: 1440px;
+  margin: auto;
 }
 
 #logo {
@@ -11153,76 +11154,30 @@ textarea.form-control-lg {
 /**font-family: 'DM Sans', sans-serif;
 font-family: 'Lato', sans-serif;
 font-family: 'Roboto', sans-serif;*/
-main .row {
-  --bs-gutter-x: 0rem;
-}
-
-.table-items {
-  display: block;
-}
-
-/*.list-group {
+#filters {
   display: flex;
-  flex-direction: row;
-  max-width: 500px;
-  max-height: 250px;
-  overflow-y: auto;
-  overflow-x: hidden;
-}*/
-.list-group {
-  display: none;
-  display: flex;
-  flex-wrap: wrap;
-  writing-mode: vertical-lr;
-  z-index: 3;
-  max-width: 700px;
-  max-height: 400px;
-  overflow: hidden;
-}
-
-.list-items {
-  cursor: pointer;
-  width: 33%;
-  writing-mode: horizontal-tb;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  flex-direction: column;
+  min-height: 72px;
+  width: 100%;
 }
 
 .form-group {
   padding: 0;
-  margin-top: 2rem;
+  max-width: 1440px;
+  gap: 20px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+  max-height: 150px;
 }
 
 .input-group {
-  padding: 0 !important;
-  display: flex;
-  justify-content: space-around;
+  position: relative;
 }
 
-option {
-  cursor: pointer;
-}
-
-#selectedTag {
-  margin: 0rem;
-  margin-bottom: 1rem !important;
-  display: none;
-}
-
-.btn {
-  text-align: center;
-  vertical-align: middle;
-  color: white;
-  display: inline-block;
-  margin: 5px 0;
-  padding: 0 !important;
-  display: flex;
-  justify-content: space-around;
-}
-
-.btn img {
-  margin-left: 10px !important;
+.opened-container {
+  position: relative;
 }
 
 .input {
@@ -11236,9 +11191,56 @@ option {
   position: absolute;
   right: 0.5rem;
   top: 1rem;
+  cursor: pointer;
+}
+
+.list-group {
+  display: none;
+  max-height: 397px;
+  width: 667px;
+  column-count: 3;
+  overflow-y: auto;
+  transform-origin: top left 300ms;
+}
+
+.list-items {
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+li {
+  cursor: pointer;
+}
+
+.form-control {
+  cursor: pointer;
+}
+
+#selectedTag {
+  margin: 1rem 0 !important;
+  width: 100%;
+  position: relative;
+}
+
+.newTag {
+  position: relative;
+}
+
+.newTag img {
+  position: absolute;
+  right: 10px;
+}
+
+#close {
+  cursor: pointer;
 }
 
 /*recettes*/
+main .row {
+  --bs-gutter-x: -0.8rem;
+  flex-shrink: 1;
+}
+
 .container {
   max-width: 1440px;
 }
