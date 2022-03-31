@@ -28,7 +28,7 @@ class RecipesCard {
     );
     card.innerHTML = `
       
-        <img class="card-img-top"  src="/assets/images/${photo}.jpg"
+        <img class="card-img-top"  src="assets/images/${photo}.jpg"
     }" alt="${this.name}" />
         <div   class="card-body py-0">
             <div id="receipTitle" class="d-flex flex-row mt-2 mb-2 gap-2 justify-content-between align-items-center">
