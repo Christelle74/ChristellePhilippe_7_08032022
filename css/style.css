@@ -11241,6 +11241,10 @@ main .row {
   flex-shrink: 1;
 }
 
+article {
+  display: block;
+}
+
 .container {
   max-width: 1440px;
 }

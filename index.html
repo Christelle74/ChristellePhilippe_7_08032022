@@ -70,7 +70,7 @@
               <div class="input-goup rounded">
                 <div class="IngredientInput opened-container">
                   <input
-                    class="bg-primary form-control shadow-sm linked-select"
+                    class="bg-primary form-control shadow-sm"
                     type="text"
                     placeholder="Ingrédients"
                     id="ingredients-filter"
@@ -82,6 +82,7 @@
                 </div>
                 <ul
                   id="ingredientsList"
+                  data-target="ingredients"
                   class="bg-primary list-group m-0 p-1 pt-0 list-unstyled fs-6"
                 ></ul>
               </div>
@@ -90,11 +91,11 @@
               <div class="input-goup rounded">
                 <div class="ApplianceInput opened-container">
                   <input
-                    class="bg-success form-control shadow-sm linked-select"
+                    class="bg-success form-control shadow-sm"
                     type="text"
                     placeholder="Appareils"
                     id="appliance-filter"
-                    data-target="ustensils-filter"
+                    data-target="appliance-filter"
                   />
                   <div class="applianceChevron chevron">
                     <img src="assets/chevron.svg" alt="" />
@@ -102,6 +103,7 @@
                 </div>
                 <ul
                   id="applianceList"
+                  data-target="appliances"
                   class="bg-success list-group row flex-wrap m-0 p-1 pt-0 list-unstyled fs-6"
                 ></ul>
               </div>
@@ -110,11 +112,11 @@
               <div class="input-goup rounded">
                 <div class="UstensilInput opened-container">
                   <input
-                    class="bg-danger form-control shadow-sm linked-select"
+                    class="bg-danger form-control shadow-sm"
                     type="text"
                     placeholder="Ustensils"
                     id="ustensils-filter"
-                    data-target="ingredients-filter"
+                    data-target="ustensil-filter"
                   />
                   <div class="ustensilChevron chevron">
                     <img src="assets/chevron.svg" alt="" />
@@ -122,6 +124,7 @@
                 </div>
                 <ul
                   id="ustensilsList"
+                  data-target="ustensils"
                   class="bg-danger list-group row flex-wrap m-0 p-1 pt-0 list-unstyled fs-6"
                 ></ul>
               </div>

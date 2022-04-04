@@ -124,6 +124,10 @@ main .row {
   --bs-gutter-x: -0.8rem;
   flex-shrink: 1;
 }
+
+article{
+  display: block;
+}
 .container {
   max-width: 1440px;
 }
