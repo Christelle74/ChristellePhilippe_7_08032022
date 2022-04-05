@@ -177,9 +177,7 @@ function createIngredientsList(ingredientsArray) {
     ingredientsList.appendChild(listOfIngredients);
     //console.log(listOfIngredients);
   });
-  ingredientsArray = Array.from(
-    document.getElementsByClassName("ingredient-item")
-  );
+  ingredientsArray = Array.from(document.querySelectorAll(".ingredient-item"));
   //console.log(ingredientsArray);
 
   ingredientsArray.forEach((item) => {
@@ -189,7 +187,7 @@ function createIngredientsList(ingredientsArray) {
       selectedTags.push(item);
       //console.log(item.textContent);
       createTag(item);
-      filterRecipes(selectedRecipes);
+      filterRecipes(selectedTags, recipesArray);
 
       //hideList(listOfIngredients, ingredientFilter, ingredientChevron);
     });
@@ -216,9 +214,7 @@ function createApplianceList(appliancesArray) {
     applianceList.appendChild(listOfAppliances);
     //console.log(listOfAppliances);
   });
-  appliancesArray = Array.from(
-    document.getElementsByClassName("appliance-item")
-  );
+  appliancesArray = Array.from(document.querySelectorAll(".appliance-item"));
   //console.log(appliancesArray);
 
   appliancesArray.forEach((item) => {
@@ -229,6 +225,7 @@ function createApplianceList(appliancesArray) {
       //console.log(selectedTags);
       //hideList(listOfAppliances, applianceFilter, applianceChevron);
       createTag(item);
+      filterRecipes(selectedTags, recipesArray);
     });
   });
 }
@@ -254,7 +251,7 @@ function createUstensilsList(ustensilsArray) {
 
     // console.log(listOfUstensils);
   });
-  ustensilsArray = Array.from(document.getElementsByClassName("ustensil-item"));
+  ustensilsArray = Array.from(document.querySelectorAll(".ustensil-item"));
   //console.log(ustensilsArray);
 
   ustensilsArray.forEach((item) => {
@@ -265,6 +262,7 @@ function createUstensilsList(ustensilsArray) {
       // console.log(selectedTags);
       // hideList(listOfUstensils, ustensilFilter, ustensilChevron);
       createTag(item);
+      filterRecipes(selectedTags, recipesArray);
     });
   });
 }
@@ -327,40 +325,48 @@ function removeSelectedTag() {
 /**
  * tri
  */
-
-function filterRecipes(selectedTag, recipesArray) {
+var selectedTag = [];
+function filterRecipes(selectedTags, recipesArray) {
   //listOfIngredients.textContent = "";
   //listOfAppliances.textContent = "";
   //listOfUstensils.textContent = "";
+
   console.log(selectedTags);
   const selectedRecipes = [];
 
   // if (
   selectedTags.forEach((tag) => {
-    var selectedTag = tag.textContent.toLowerCase().replace(/\s/g, "");
+    // console.log("test foreach");
+    selectedTag.push(tag.textContent.toLowerCase().replace(/\s/g, ""));
+    selectedTag = [...new Set(selectedTag)].sort();
     console.log(selectedTag);
+    //console.log(recipesArray);
+    //) {
+    recipesArray.filter((recipe) => {
+      if (
+        recipe.name.toLowerCase().replace(/\s/g, "").includes(selectedTag) ||
+        recipe.description
+          .toLowerCase()
+          .replace(/\s/g, "")
+          .includes(selectedTag) ||
+        recipe.ingredients.find((elt) =>
+          elt.ingredient.toLowerCase().replace(/\s/g, "").includes(selectedTag)
+        ) ||
+        recipe.appliance
+          .toLowerCase()
+          .replace(/\s/g, "")
+          .includes(selectedTag) ||
+        recipe.ustensils.find((elt) =>
+          elt.toLowerCase().replace(/\s/g, "").includes(selectedTag)
+        )
+      ) {
+        selectedRecipes.push(recipe);
+        console.log(selectedRecipes);
+        return selectedRecipes;
+      }
+    });
   });
-  //) {
-  recipesArray.filter((recipe) => {
-    if (
-      recipe.name.toLowerCase().replace(/\s/g, "").includes(selectedTag) ||
-      recipe.description
-        .toLowerCase()
-        .replace(/\s/g, "")
-        .includes(selectedTag) ||
-      recipe.ingredients.find((elt) =>
-        elt.ingredient.toLowerCase().replace(/\s/g, "").includes(selectedTag)
-      ) ||
-      recipe.appliance.toLowerCase().replace(/\s/g, "").includes(selectedTag) ||
-      recipe.ustensils.find((elt) =>
-        elt.toLowerCase().replace(/\s/g, "").includes(selectedTag)
-      )
-    ) {
-      selectedRecipes.push(recipe);
-      return selectedRecipes;
-    }
-  });
-  console.log(selectedRecipes);
+
   // }
   createRecipesList(selectedRecipes);
 }
