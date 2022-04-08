@@ -448,3 +448,43 @@ function displayUstensilsList(selectedRecipesByIngredients) {
   });
   createUstensilsList(ustensilsList);
 }
+/*function displayByTags(recipesArray) {
+  selectedIngredients.forEach((tag) => {
+    console.log("test");
+    const index = selectedIngredients.indexOf(tag);
+    console.log(index);
+
+    if (index != -1) {
+      selectedIngredients.splice(index, 1);
+
+      // recipesArray.add(tag);
+      createRecipesList(recipesArray);
+    }
+  });
+
+  const value = e.target.getAttribute("data-item");
+  console.log(value); //retourne la valeur 1 fois sur 10
+}
+function displayByTag(recipesArray) {
+  const filteredRecipes = recipesArray.filter((recipe) => {
+    if (
+      selectedTags.every((item) => {
+        const formatedItem = item.textContent.toLowerCase().replace(/\s/g, "");
+
+        recipe.ingredients.some((i) => {
+          return i.ingredient.toLowerCase().includes(formatedItem);
+        }) ||
+          recipe.appliance.toLowerCase().includes(formatedItem) ||
+          recipe.ustensils.some((ustensil) => {
+            return ustensil.toLowerCase() === formatedItem;
+          });
+      })
+    ) {
+      if (filteredFilters.length) {
+        console.log(filteredRecipes);
+        recipesContainer.innerHTML = "";
+        createRecipesList(filteredRecipes);
+      }
+    }
+  });
+}*/

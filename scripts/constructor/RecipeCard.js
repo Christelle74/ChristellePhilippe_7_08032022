@@ -16,8 +16,8 @@ class RecipesCard {
     const card = document.createElement("article");
     // console.log(card);
     let photo = "";
-    photo = this.name;
-    photo = photo.toLowerCase().replace(/\s/g, "");
+    photo = this.name.toLowerCase().replace(/\s/g, "");
+    //photo = photo;
 
     card.classList.add(
       "card",
