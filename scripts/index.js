@@ -447,7 +447,7 @@ function displayUstensilsList(selectedRecipesByIngredients) {
     });
   });
   createUstensilsList(ustensilsList);
-} /*
+}
 
 /*function displayByTags(recipesArray) {
   selectedIngredients.forEach((tag) => {
@@ -465,7 +465,7 @@ function displayUstensilsList(selectedRecipesByIngredients) {
 
   const value = e.target.getAttribute("data-item");
   console.log(value); //retourne la valeur 1 fois sur 10
-}*/ /*
+}
 function displayByTag(recipesArray) {
   const filteredRecipes = recipesArray.filter((recipe) => {
     if (
