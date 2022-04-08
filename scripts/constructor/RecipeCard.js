@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 class RecipesCard {
   constructor(recipe) {
     this.id = recipe.id;
@@ -23,7 +24,7 @@ class RecipesCard {
       "col-lg-4",
       "col-md-6",
       "col-sm-12",
-      "g-5",
+      "g-4",
       "border-0"
     );
     card.innerHTML = `
@@ -42,13 +43,13 @@ class RecipesCard {
                 </div>
             </div>
         
-            <div class="recipe d-flex flex-row justify-content-between gap-2">
+            <div class="recipe d-flex flex-row justify-content-between gap-1">
                 <ul class="ingredient-container col-5 mb-0">${this.ingredients
                   .map(
                     (element) =>
                       `
                 <li>
-                    ${element.ingredient} : ${
+                    <strong>${element.ingredient} :</strong> ${
                         "quantity" in element ? element.quantity : ""
                       } ${"unit" in element ? element.unit : ""}
                 `
