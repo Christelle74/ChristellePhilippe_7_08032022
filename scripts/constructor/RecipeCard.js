@@ -17,7 +17,6 @@ class RecipesCard {
     // console.log(card);
     let photo = "";
     photo = this.name.toLowerCase().replace(/\s/g, "");
-    //photo = photo;
 
     card.classList.add(
       "card",
