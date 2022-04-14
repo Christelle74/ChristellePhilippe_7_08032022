@@ -17,7 +17,7 @@ const ingredientFilter = document.querySelector("#ingredients-filter");
 const applianceFilter = document.querySelector("#appliance-filter");
 const ustensilFilter = document.querySelector("#ustensils-filter");
 //const filters = document.querySelectorAll(".form-control");
-//console.log(ingredientFilter);
+//console.log(filters);
 
 //chevrons
 const ingredientChevron = document.querySelector(".ingredientChevron");
@@ -37,7 +37,7 @@ const listOfAppliances = document.querySelector("#applianceList");
 var recipesArray = []; //tableau de toutes les recettes
 //console.log(recipesArray);
 var ingredientsArray = []; //tableau des ingrédients
-//console.log(ingredientsArray);
+
 var appliancesArray = []; //tableau des appareils
 //console.log(appliancesArray);
 var ustensilsArray = []; //tableau des ustensils
@@ -47,19 +47,15 @@ var tagsArray = []; //tableau contenant tous les tags
 //console.log(tagsArray);
 //var selectedRecipes = []; // tableau recettes triées
 var selectedTags = []; //tableau de tags selectionnés
-//console.log(selectedTags);
+console.log(selectedTags);
 var selectedIngredients = []; //tableau des ingredients selectionnés
-console.log(selectedIngredients);
+//console.log(selectedIngredients);
 var selectedAppliances = [];
-console.log(selectedAppliances);
+//console.log(selectedAppliances);
 var selectedUstensils = [];
-console.log(selectedUstensils);
+//console.log(selectedUstensils);
 
 //Listeners
-
-/*ingredientFilter.addEventListener("keyup", filterRecipes);
-applianceFilter.addEventListener("keyup", filterRecipes);
-ustensilFilter.addEventListener("keyup", filterRecipes);*/
 
 ingredientFilter.addEventListener("click", (e) => {
   e.preventDefault();
@@ -102,36 +98,59 @@ function hideList(listGroup, input, chevron) {
   chevron.style.transform = "none";
 }
 
+function init() {
+  const recipesByIngredients = filterRecipesByIngredients(
+    recipesArray,
+    selectedIngredients
+  );
+  const recipesByAppliances = filterRecipesByAppliances(
+    recipesByIngredients,
+    selectedAppliances
+  );
+  const recipesByUstensils = filterRecipesByUstensils(
+    recipesByAppliances,
+    selectedUstensils
+  );
+
+  createTag();
+  displayIngredientsList(recipesByIngredients);
+  displayAppliancesList(recipesByAppliances);
+  displayUstensilsList(recipesByUstensils);
+
+  createRecipesList(recipesByUstensils);
+}
+
 /**
- * It fetches the data from the recipes.json file and creates a list of recipes.
- * {recipes} destructuring pour obtenir directement les données
+ * It fetches the recipes.json file, then it creates a recipesArray variable and assigns it the recipes
+ * object from the json file, then it calls the createRecipesList function and passes it the recipes
+ * object.
  */
 async function getRecipes() {
   const res = await fetch("data/recipes.json");
   const { recipes } = await res.json();
   recipesArray = recipes;
-
-  createRecipesList(recipesArray);
+  //console.log(recipesArray);
+  createRecipesList(recipes);
 }
 getRecipes();
-//recipesContainer.innerHTML = "";
 
 /**
- * It creates a list of recipes cards.
- * @param recipesArray - an array of recipe objects
+ * Create a new RecipesCard for each recipe in the recipes array, and append it to the
+ * recipesContainer.
+ * @param recipes - an array of objects
  */
-function createRecipesList(recipesArray) {
-  recipesContainer.innerHTML = "";
-  recipesArray.map((recipe) => {
+function createRecipesList(recipes) {
+  recipes.map((recipe) => {
     recipesContainer.appendChild(new RecipesCard(recipe).buildCard());
+    // init();
   });
 }
 
 /**
- * This function will get all the recipes from the database and then create a list of all the
- * ingredients, appliances and ustensils
+ * It takes the data from the JSON file and creates three arrays: ingredientsArray, appliancesArray and
+ * ustensilsArray. Then it creates three lists: ingredientsList, appliancesList and ustensilsList.
  */
-const displayAllLists = async () => {
+const createAllLists = async () => {
   await getRecipes();
 
   recipesArray.forEach((recipe) => {
@@ -150,164 +169,159 @@ const displayAllLists = async () => {
   ingredientsArray = [...new Set(ingredientsArray)].sort();
   appliancesArray = [...new Set(appliancesArray)].sort();
   ustensilsArray = [...new Set(ustensilsArray)].sort();
+
   //console.log(ingredientsArray);
   createIngredientsList(ingredientsArray);
   createApplianceList(appliancesArray);
   createUstensilsList(ustensilsArray);
 };
-displayAllLists();
+createAllLists();
 
 /**
- * Create a list of ingredients from the ingredients array
- * @param ingredientsArray- an array of ingredients
+ * It takes an array of ingredients, clears the ingredients container, and then creates a new
+ * CreateIngredientsList object for each ingredient in the array, and then appends the result of the
+ * buildIngredientsList() method to the ingredients container.
+ * @param ingredients - an array of objects
  */
-function createIngredientsList(ingredientsArray) {
-  ingredientsArray.forEach((ingredient) => {
-    const listOfIngredients = document.createElement("li");
-    listOfIngredients.classList.add(
-      "list-items",
-      "col-4",
-      "col-sm-6",
-      "col-md-4",
-      "ingredient-item"
+/* Creating a function called createIngredientsList that takes in a parameter called ingredients. */
+function createIngredientsList(ingredients) {
+  ingredientsContainer.innerHTML = "";
+  ingredients.forEach((ingredient) => {
+    ingredientsContainer.appendChild(
+      new CreateIngredientsList(ingredient).buildIngredientsList()
     );
-    listOfIngredients.setAttribute("data-color", "bg-primary");
-    listOfIngredients.setAttribute("data-item", ingredient);
-    listOfIngredients.innerHTML = ingredient; //ou `${ingredient}`;
-    ingredientsContainer.appendChild(listOfIngredients);
-    //console.log(listOfIngredients);
   });
-  ingredientsList = Array.from(document.querySelectorAll(".ingredient-item"));
-  ingredientsList = [...new Set(ingredientsList)].sort();
-  //console.log(ingredientsList);
-
-  ingredientsList.forEach((item) => {
+  ingredientsArray = Array.from(document.querySelectorAll(".ingredient-item"));
+  ingredientsArray = [...new Set(ingredientsArray)].sort();
+  //console.log(ingredientsArray);
+  ingredientsArray.forEach((item) => {
     item.addEventListener("click", () => {
-      selectedIngredients.push(item);
+      selectedIngredients.push(item.dataset.item);
       //console.log(selectedIngredients);
+      selectedTags.push(item);
+      //console.log(selectedTags);
       hideList(listOfIngredients, ingredientFilter, ingredientChevron);
-      createTag(item);
-      filterRecipesByIngredients(recipesArray, selectedIngredients);
+
+      //filterRecipesByIngredients(recipesArray, selectedIngredients);
+      init();
     });
   });
 }
 
 /**
- * Create a list of appliances and add an event listener to each one
- * @param appliancesArray - an array of strings that will be used to create the list of appliances.
+ * It takes an array of appliances and creates a list of appliances.
+ * @param appliances - an array of objects
  */
-function createApplianceList(appliancesArray) {
-  appliancesArray.forEach((appliance) => {
-    const listOfAppliances = document.createElement("li");
-    listOfAppliances.classList.add(
-      "list-items",
-      "col-4",
-      "col-sm-6",
-      "col-md-4",
-      "appliance-item"
+function createApplianceList(appliances) {
+  applianceContainer.innerHTML = "";
+  appliances.forEach((appliance) => {
+    applianceContainer.appendChild(
+      new CreateAppliancesList(appliance).buildAppliancesList()
     );
-    listOfAppliances.setAttribute("data-color", "bg-success");
-    listOfAppliances.setAttribute("data-item", appliance);
-    listOfAppliances.innerHTML = appliance;
-    applianceContainer.appendChild(listOfAppliances);
-    //console.log(listOfAppliances);
   });
-  appliancesList = Array.from(document.querySelectorAll(".appliance-item"));
-  appliancesList = [...new Set(appliancesList)].sort();
-  //console.log(appliancesList);
 
-  appliancesList.forEach((item) => {
+  appliancesArray = Array.from(document.querySelectorAll(".appliance-item"));
+  appliancesArray = [...new Set(appliancesArray)].sort();
+  //console.log(appliancesArray);
+
+  appliancesArray.forEach((item) => {
     item.addEventListener("click", () => {
-      selectedAppliances.push(item);
+      //console.log("test");
+      selectedAppliances.push(item.dataset.item);
       //console.log(selectedAppliances);
-
-      createTag(item);
+      selectedTags.push(item);
+      //console.log(selectedTags);
       hideList(listOfAppliances, applianceFilter, applianceChevron);
-      filterRecipesByAppliances(
-        selectedAppliances,
-        selectedRecipesByIngredients
-      );
+      init();
     });
   });
 }
 
 /**
- * Create a list of ustensils and add an event listener to each one
- * @param ustensilsArray - an array of strings that will be used to create the list of ustensils.
+ * It takes an array of objects, loops through them, and creates a new instance of the
+ * CreateUstensilsList class for each object, then calls the buildUstensilsList method on each
+ * instance, and appends the result to the ustensilsContainer element.
+ * @param ustensils - an array of objects
  */
-function createUstensilsList(ustensilsArray) {
-  ustensilsArray.forEach((ustensil) => {
-    const listOfUstensils = document.createElement("li");
-    listOfUstensils.classList.add(
-      "list-items",
-      "col-4",
-      "col-sm-6",
-      "col-md-4",
-      "ustensil-item"
+function createUstensilsList(ustensils) {
+  ustensilsContainer.innerHTML = "";
+  ustensils.forEach((ustensil) => {
+    ustensilsContainer.appendChild(
+      new CreateUstensilsList(ustensil).buildUstensilsList()
     );
-    listOfUstensils.setAttribute("data-color", "bg-danger");
-    listOfUstensils.setAttribute("data-item", ustensil);
-    listOfUstensils.innerHTML = ustensil;
-    ustensilsContainer.appendChild(listOfUstensils);
-
-    // console.log(listOfUstensils);
   });
-  ustensilsList = Array.from(document.querySelectorAll(".ustensil-item"));
-  ustensilsList = [...new Set(ustensilsList)].sort();
-  //console.log(ustensilsList);
+  ustensilsArray = Array.from(document.querySelectorAll(".ustensil-item"));
+  ustensilsArray = [...new Set(ustensilsArray)].sort();
+  //console.log(ustensilsArray);
 
-  ustensilsList.forEach((item) => {
+  ustensilsArray.forEach((item) => {
     item.addEventListener("click", () => {
-      selectedUstensils.push(item);
+      selectedUstensils.push(item.dataset.item);
       //console.log(selectedUstensils);
       selectedTags.push(item);
-      // console.log(selectedTags);
+      //console.log(selectedTags);
       hideList(listOfUstensils, ustensilFilter, ustensilChevron);
-      createTag(item);
-      filterRecipesByUstensils(selectedUstensils, selectedRecipesByAppliances);
+      //createTag(item);
+      init();
+      //filterRecipesByUstensils(selectedUstensils, selectedRecipesByAppliances);
     });
   });
 }
+
+/*filters.forEach((filter) => {
+  filter.addEventListener("input", (e) => {
+    getRecipes(e.target.value).then(() => createRecipesList(recipesArray));
+  });
+});*/
+
+/*ingredientFilter.addEventListener("input", filterRecipes);
+applianceFilter.addEventListener("keyup", filterRecipes);
+ustensilFilter.addEventListener("keyup", filterRecipes);*/
 
 /**
  * GESTION DES TAGS
  */
-/**
- * Create a new tag element and append it to the tags element
- * @param item - The element that was clicked.
- * @returns Nothing.
- */
-function createTag(item) {
-  //selectedTags.forEach((item) => {
-  const tag = document.createElement("li");
-  const tagColor = item.dataset.color;
-  const tagName = item.innerHTML;
-  tag.classList.add(
-    `${tagColor}`,
-    "newTag",
-    "mb-1",
-    "me-2",
-    `bg-${tagColor}`,
-    "px-3",
-    "py-2",
-    "pe-5",
-    "d-flex",
-    "flex-row",
-    "align-items-center",
-    "rounded"
-  );
 
-  tag.innerHTML = `${tagName}
+/**
+ * It creates a new tag for each item in the selectedTags array.
+ */
+function createTag() {
+  tags.innerHTML = "";
+  selectedTags.forEach((tag) => {
+    //console.log(selectedTags);
+
+    const tagLi = document.createElement("li");
+    const tagColor = tag.dataset.color;
+    const tagName = tag.dataset.item;
+
+    tagLi.classList.add(
+      `${tagColor}`,
+      "newTag",
+      "mb-1",
+      "me-2",
+      `bg-${tagColor}`,
+      "px-3",
+      "py-2",
+      "pe-5",
+      "d-flex",
+      "flex-row",
+      "align-items-center",
+      "rounded"
+    );
+
+    tagLi.innerHTML = `${tagName}
   <img id="close" src="assets/times-circle-regular.svg" alt=""
 />`;
-  tag.setAttribute("data-item", tagName);
-  tags.appendChild(tag);
+    tagLi.setAttribute("data-item", tagName);
 
-  selectedTags = Array.from(document.querySelectorAll(".newTag"));
-  console.log(selectedTags);
-  tag.addEventListener("click", closeTag);
-
-  return tag;
+    tags.appendChild(tagLi);
+    //console.log(tagLi);
+    tagLi.addEventListener("click", closeTag);
+    return tagLi;
+  });
+  tagsList = Array.from(document.querySelectorAll(".newTag"));
+  tagsList = [...new Set(tagsList)];
+  //console.log(tagsList);
 }
 
 /**
@@ -317,78 +331,56 @@ function createTag(item) {
 function closeTag(e) {
   let element = e.target;
   element.parentNode.remove(element);
-  listOfIngredients.innerHTML = "";
-  listOfAppliances.innerHTML = "";
-  listOfUstensils.innerHTML = "";
-  recipesContainer.innerHTML = "";
-
-  displayAllLists(ingredientsList, appliancesList, ustensilsList);
 }
 
 /**
  * gestion des tris
  */
 
-var selectedRecipesByIngredients = [];
-
-function filterRecipesByIngredients(recipesArray, selectedIngredients) {
+function filterRecipesByIngredients(recipesToFilter) {
   //Filtre les recettes selon les ingrédients choisis
-  recipesContainer.innerHTML = "";
-  listOfIngredients.innerHTML = "";
-  listOfAppliances.innerHTML = "";
-  listOfUstensils.innerHTML = "";
-  selectedIngredients.forEach((item) => {
-    var ingredientValue = item.textContent.toLowerCase().replace(/\s/g, "");
-    console.log(ingredientValue);
+  let selectedRecipesByIngredients = [];
 
-    recipesArray.filter((recipe) => {
-      if (
-        recipe.ingredients.find((elt) =>
-          elt.ingredient
-            .toLowerCase()
-            .replace(/\s/g, "")
-            .includes(ingredientValue)
-        )
-      ) {
-        selectedRecipesByIngredients.push(recipe);
-        console.log(selectedRecipesByIngredients);
-      }
+  if (selectedIngredients.length === 0) {
+    selectedRecipesByIngredients = recipesToFilter;
+  } else {
+    selectedIngredients.forEach((item) => {
+      let ingredientValue = item.toLowerCase().replace(/\s/g, "");
+
+      recipesToFilter.filter((recipe) => {
+        if (
+          recipe.ingredients.find((elt) =>
+            elt.ingredient
+              .toLowerCase()
+              .replace(/\s/g, "")
+              .includes(ingredientValue)
+          )
+        ) {
+          selectedRecipesByIngredients.push(recipe);
+          selectedRecipesByIngredients = [
+            ...new Set(selectedRecipesByIngredients),
+          ];
+          console.log(selectedRecipesByIngredients);
+        }
+      });
     });
-  });
-  createRecipesList(selectedRecipesByIngredients);
-  displayIngredientsList(selectedRecipesByIngredients);
-  displayAppliancesList(selectedRecipesByIngredients);
-  displayUstensilsList(selectedRecipesByIngredients);
+  }
+  return selectedRecipesByIngredients;
 }
 
-var selectedRecipesByAppliances = [];
-
-function filterRecipesByAppliances(
-  selectedAppliances,
-  selectedRecipesByIngredients
-) {
+function filterRecipesByAppliances(recipesToFilter) {
   //Filtre les recettes filtrées par ingrédients, selon l’appareil choisi
-  recipesContainer.innerHTML = "";
-  listOfUstensils.innerHTML = "";
-  listOfIngredients.innerHTML = "";
-  listOfAppliances.innerHTML = "";
 
-  selectedAppliances.forEach((item) => {
-    var applianceValue = item.textContent.toLowerCase().replace(/\s/g, "");
-    console.log(applianceValue);
+  let selectedRecipesByAppliances = [];
 
-    selectedRecipesByIngredients.filter((recipe) => {
-      if (
-        recipe.appliance
-          .toLowerCase()
-          .replace(/\s/g, "")
-          .includes(applianceValue)
-      ) {
-        selectedRecipesByAppliances.push(recipe);
-        console.log(selectedRecipesByAppliances);
-      }
-    }); /*||
-      recipesArray.filter((recipe) => {
+  if (selectedAppliances.length === 0) {
+    selectedRecipesByAppliances = recipesToFilter;
+  } else {
+    selectedAppliances.forEach((item) => {
+      let applianceValue = item.toLowerCase().replace(/\s/g, "");
+      // console.log(applianceValue);
+
+      recipesToFilter.filter((recipe) => {
         if (
           recipe.appliance
             .toLowerCase()
@@ -396,130 +388,81 @@ function filterRecipesByAppliances(
             .includes(applianceValue)
         ) {
           selectedRecipesByAppliances.push(recipe);
+          selectedRecipesByAppliances = [
+            ...new Set(selectedRecipesByAppliances),
+          ];
           console.log(selectedRecipesByAppliances);
         }
-      });*/
-  });
-  displayUstensilsList(selectedRecipesByAppliances);
-  displayIngredientsList(selectedRecipesByAppliances);
-  displayAppliancesList(selectedRecipesByAppliances);
-  createRecipesList(selectedRecipesByAppliances);
+      });
+    });
+  }
+  return selectedRecipesByAppliances;
 }
 
-var selectedRecipesByUstensils = [];
-
-function filterRecipesByUstensils(
-  selectedUstensils,
-  selectedRecipesByAppliances
-) {
+function filterRecipesByUstensils(recipesToFilter) {
   //Filtre les recettes filtrées par appareils, selon les ustensiles choisis
-  listOfIngredients.innerHTML = "";
-  listOfAppliances.innerHTML = "";
-  listOfUstensils.innerHTML = "";
-  recipesContainer.innerHTML = "";
-  selectedUstensils.forEach((item) => {
-    var ustensilValue = item.textContent.toLowerCase().replace(/\s/g, "");
-    //console.log(ustensilValue);
+  let selectedRecipesByUstensils = [];
 
-    selectedRecipesByAppliances.filter((recipe) => {
-      if (
-        recipe.ustensils.find((elt) =>
-          elt.toLowerCase().replace(/\s/g, "").includes(ustensilValue)
-        )
-      ) {
-        selectedRecipesByUstensils.push(recipe);
-        console.log(selectedRecipesByUstensils);
-      }
-    }); /*||
-      recipesArray.filter((recipe) => {
+  if (selectedUstensils.length === 0) {
+    selectedRecipesByUstensils = recipesToFilter;
+  } else {
+    selectedUstensils.forEach((item) => {
+      let ustensilValue = item.toLowerCase().replace(/\s/g, "");
+      //console.log(ustensilValue);
+
+      recipesToFilter.filter((recipe) => {
         if (
           recipe.ustensils.find((elt) =>
             elt.toLowerCase().replace(/\s/g, "").includes(ustensilValue)
           )
         ) {
           selectedRecipesByUstensils.push(recipe);
-          console.log(selectedRecipesByUstensils);
+          selectedRecipesByUstensils = [...new Set(selectedRecipesByUstensils)];
+          //console.log(selectedRecipesByUstensils);
         }
-      });*/
-  });
-  displayUstensilsList(selectedRecipesByUstensils);
-  displayIngredientsList(selectedRecipesByUstensils);
-  displayAppliancesList(selectedRecipesByUstensils);
-
-  createRecipesList(selectedRecipesByUstensils);
-}
-
-function displayIngredientsList(selectedRecipesByIngredients) {
-  ingredientsList = [];
-  selectedRecipesByIngredients.forEach((recipe) => {
-    recipe.ingredients.forEach((ingredient) => {
-      ingredientsList.push(ingredient.ingredient);
-      ingredientsList = [...new Set(ingredientsList)].sort();
-      console.log(ingredientsList);
-    });
-  });
-  createIngredientsList(ingredientsList);
-}
-
-function displayAppliancesList(selectedRecipesByIngredients) {
-  appliancesList = [];
-  selectedRecipesByIngredients.forEach((recipe) => {
-    appliancesList.push(recipe.appliance);
-    appliancesList = [...new Set(appliancesList)].sort();
-    console.log(appliancesList);
-  });
-  createApplianceList(appliancesList);
-}
-
-function displayUstensilsList(selectedRecipesByIngredients) {
-  ustensilsList = [];
-  selectedRecipesByIngredients.forEach((recipe) => {
-    recipe.ustensils.forEach((ustensil) => {
-      ustensilsList.push(ustensil);
-      ustensilsList = [...new Set(ustensilsList)].sort();
-      console.log(ustensilsList); //retourne le tableau des ustensils  suivant les recettes triées
-    });
-  });
-  createUstensilsList(ustensilsList);
-}
-
-/*function displayByTags(recipesArray) {
-  selectedIngredients.forEach((tag) => {
-    console.log("test");
-    const index = selectedIngredients.indexOf(tag);
-    console.log(index);
-
-    if (index != -1) {
-      selectedIngredients.splice(index, 1);
-
-      // recipesArray.add(tag);
-      createRecipesList(recipesArray);
-    }
-  });
-
-  const value = e.target.getAttribute("data-item");
-  console.log(value); //retourne la valeur 1 fois sur 10
-}
-function displayByTag(recipesArray) {
-  const filteredRecipes = recipesArray.filter((recipe) => {
-    if (
-      selectedTags.every((item) => {
-        const formatedItem = item.textContent.toLowerCase().replace(/\s/g, "");
-
-        recipe.ingredients.some((i) => {
-          return i.ingredient.toLowerCase().includes(formatedItem);
-        }) ||
-          recipe.appliance.toLowerCase().includes(formatedItem) ||
-          recipe.ustensils.some((ustensil) => {
-            return ustensil.toLowerCase() === formatedItem;
-          });
-      })
-    ) {
-      if (filteredFilters.length) {
-        console.log(filteredRecipes);
         recipesContainer.innerHTML = "";
-        createRecipesList(filteredRecipes);
-      }
-    }
+      });
+    });
+  }
+  return selectedRecipesByUstensils;
+}
+
+function displayIngredientsList(tableauatrier) {
+  // console.log(ingredientsArray);
+  //ingredientsContainer.innerHTML = "";
+  let newIngredientsArray = [];
+
+  tableauatrier.forEach((recipe) => {
+    recipe.ingredients.forEach((ingredient) => {
+      newIngredientsArray.push(ingredient.ingredient);
+      newIngredientsArray = [...new Set(newIngredientsArray)].sort();
+      console.log(newIngredientsArray);
+    });
   });
-}*/
+
+  createIngredientsList(newIngredientsArray);
+}
+
+function displayAppliancesList(tableauatrier) {
+  // console.log(appliancesArray);
+  let newAppliancesArray = [];
+  tableauatrier.forEach((recipe) => {
+    newAppliancesArray.push(recipe.appliance);
+    newAppliancesArray = [...new Set(newAppliancesArray)].sort();
+    //console.log(appliancesList);
+  });
+  createApplianceList(newAppliancesArray);
+}
+
+function displayUstensilsList(tableauatrier) {
+  console.log(ustensilsArray);
+  let newUstensilsArray = [];
+  tableauatrier.forEach((recipe) => {
+    recipe.ustensils.forEach((ustensil) => {
+      newUstensilsArray.push(ustensil);
+      newUstensilsArray = [...new Set(newUstensilsArray)].sort();
+      //console.log(ustensilsList); //retourne le tableau des ustensils  suivant les recettes triées
+    });
+  });
+  createUstensilsList(newUstensilsArray);
+}
