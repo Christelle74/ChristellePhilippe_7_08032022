@@ -1,14 +1,6 @@
 /* eslint-disable no-undef */
 /**----------DOM----------*/
 const recipesContainer = document.querySelector("#output");
-const ingredientsContainer = document.querySelector("#ingredientsList");
-const applianceContainer = document.querySelector("#applianceList");
-const ustensilsContainer = document.querySelector("#ustensilsList");
-//console.log(ustensilsList);
-//const filtersContainer = document.querySelector("#filters");
-//console.log(filtersContainer);
-//const listGroup = document.querySelectorAll(".list-group");
-//console.log(listGroup);
 const tags = document.querySelector(".selectedTag");
 //console.log(tags);
 
@@ -17,15 +9,13 @@ const ingredientFilter = document.querySelector("#ingredients-filter");
 const applianceFilter = document.querySelector("#appliance-filter");
 const ustensilFilter = document.querySelector("#ustensils-filter");
 //const filters = document.querySelectorAll(".form-control");
-//console.log(filters);
+//console.log(ingredientFilter);
 
 //chevrons
 const ingredientChevron = document.querySelector(".ingredientChevron");
 const applianceChevron = document.querySelector(".applianceChevron");
 const ustensilChevron = document.querySelector(".ustensilChevron");
-//console.log(ustensilChevron);
 const chevrons = document.querySelectorAll(".chevron");
-//);
 
 //ul
 const listOfIngredients = document.querySelector("#ingredientsList");
@@ -37,7 +27,7 @@ const listOfAppliances = document.querySelector("#applianceList");
 var recipesArray = []; //tableau de toutes les recettes
 //console.log(recipesArray);
 var ingredientsArray = []; //tableau des ingrédients
-
+console.log(ingredientsArray);
 var appliancesArray = []; //tableau des appareils
 //console.log(appliancesArray);
 var ustensilsArray = []; //tableau des ustensils
@@ -98,6 +88,11 @@ function hideList(listGroup, input, chevron) {
   chevron.style.transform = "none";
 }
 
+/**
+ * The function init() is called when the page loads, and it filters the recipesArray by the
+ * selectedIngredients, then creates the recipes list, the tags, and the lists of ingredients,
+ * appliances, and ustensils.
+ */
 function init() {
   const recipesByIngredients = filterRecipesByIngredients(
     recipesArray,
@@ -105,19 +100,17 @@ function init() {
   );
   const recipesByAppliances = filterRecipesByAppliances(
     recipesByIngredients,
-    selectedAppliances
+    selectedIngredients
   );
   const recipesByUstensils = filterRecipesByUstensils(
     recipesByAppliances,
-    selectedUstensils
+    selectedIngredients
   );
-
+  createRecipesList(recipesByUstensils);
   createTag();
   displayIngredientsList(recipesByIngredients);
   displayAppliancesList(recipesByAppliances);
   displayUstensilsList(recipesByUstensils);
-
-  createRecipesList(recipesByUstensils);
 }
 
 /**
@@ -140,9 +133,9 @@ getRecipes();
  * @param recipes - an array of objects
  */
 function createRecipesList(recipes) {
+  recipesContainer.innerHTML = "";
   recipes.map((recipe) => {
     recipesContainer.appendChild(new RecipesCard(recipe).buildCard());
-    // init();
   });
 }
 
@@ -178,16 +171,13 @@ const createAllLists = async () => {
 createAllLists();
 
 /**
- * It takes an array of ingredients, clears the ingredients container, and then creates a new
- * CreateIngredientsList object for each ingredient in the array, and then appends the result of the
- * buildIngredientsList() method to the ingredients container.
- * @param ingredients - an array of objects
+ * It creates a list of ingredients from an array of ingredients
+ * @param ingredients - an array of ingredients
  */
-/* Creating a function called createIngredientsList that takes in a parameter called ingredients. */
 function createIngredientsList(ingredients) {
-  ingredientsContainer.innerHTML = "";
+  listOfIngredients.innerHTML = "";
   ingredients.forEach((ingredient) => {
-    ingredientsContainer.appendChild(
+    listOfIngredients.appendChild(
       new CreateIngredientsList(ingredient).buildIngredientsList()
     );
   });
@@ -198,7 +188,7 @@ function createIngredientsList(ingredients) {
     item.addEventListener("click", () => {
       selectedIngredients.push(item.dataset.item);
       //console.log(selectedIngredients);
-      selectedTags.push(item);
+      if (!inSelectedTags(item.dataset.item)) selectedTags.push(item); // empeche l'affichage en double du tag
       //console.log(selectedTags);
       hideList(listOfIngredients, ingredientFilter, ingredientChevron);
 
@@ -209,13 +199,14 @@ function createIngredientsList(ingredients) {
 }
 
 /**
- * It takes an array of appliances and creates a list of appliances.
+ * It creates a list of appliances, and when you click on one of them, it adds it to an array of
+ * selected appliances.
  * @param appliances - an array of objects
  */
 function createApplianceList(appliances) {
-  applianceContainer.innerHTML = "";
+  listOfAppliances.innerHTML = "";
   appliances.forEach((appliance) => {
-    applianceContainer.appendChild(
+    listOfAppliances.appendChild(
       new CreateAppliancesList(appliance).buildAppliancesList()
     );
   });
@@ -229,7 +220,7 @@ function createApplianceList(appliances) {
       //console.log("test");
       selectedAppliances.push(item.dataset.item);
       //console.log(selectedAppliances);
-      selectedTags.push(item);
+      if (!inSelectedTags(item.dataset.item)) selectedTags.push(item); // empeche l'affichage en double du tag
       //console.log(selectedTags);
       hideList(listOfAppliances, applianceFilter, applianceChevron);
       init();
@@ -238,15 +229,15 @@ function createApplianceList(appliances) {
 }
 
 /**
- * It takes an array of objects, loops through them, and creates a new instance of the
- * CreateUstensilsList class for each object, then calls the buildUstensilsList method on each
- * instance, and appends the result to the ustensilsContainer element.
+ * It creates a list of ustensils, and when you click on one of them, it adds it to the
+ * selectedUstensils array.
  * @param ustensils - an array of objects
  */
+
 function createUstensilsList(ustensils) {
-  ustensilsContainer.innerHTML = "";
+  listOfUstensils.innerHTML = "";
   ustensils.forEach((ustensil) => {
-    ustensilsContainer.appendChild(
+    listOfUstensils.appendChild(
       new CreateUstensilsList(ustensil).buildUstensilsList()
     );
   });
@@ -258,25 +249,28 @@ function createUstensilsList(ustensils) {
     item.addEventListener("click", () => {
       selectedUstensils.push(item.dataset.item);
       //console.log(selectedUstensils);
-      selectedTags.push(item);
+      if (!inSelectedTags(item.dataset.item)) selectedTags.push(item); // empeche l'affichage en double du tag
       //console.log(selectedTags);
       hideList(listOfUstensils, ustensilFilter, ustensilChevron);
-      //createTag(item);
       init();
-      //filterRecipesByUstensils(selectedUstensils, selectedRecipesByAppliances);
     });
   });
 }
 
-/*filters.forEach((filter) => {
-  filter.addEventListener("input", (e) => {
-    getRecipes(e.target.value).then(() => createRecipesList(recipesArray));
+// Check if selectedTags contains item name
+/**
+ * If the item_name is in the selectedTags array, return true, otherwise return false.
+ * @param item_name - the name of the item to be checked
+ * @returns The result of the last iteration of the loop.
+ */
+function inSelectedTags(item_name) {
+  var result = false;
+  selectedTags.forEach((item) => {
+    result = item.dataset.item === item_name;
+    if (result) return;
   });
-});*/
-
-/*ingredientFilter.addEventListener("input", filterRecipes);
-applianceFilter.addEventListener("keyup", filterRecipes);
-ustensilFilter.addEventListener("keyup", filterRecipes);*/
+  return result;
+}
 
 /**
  * GESTION DES TAGS
@@ -317,6 +311,7 @@ function createTag() {
     tags.appendChild(tagLi);
     //console.log(tagLi);
     tagLi.addEventListener("click", closeTag);
+
     return tagLi;
   });
   tagsList = Array.from(document.querySelectorAll(".newTag"));
@@ -325,18 +320,80 @@ function createTag() {
 }
 
 /**
- * *Close the tag that was just clicked on.*
- * @param e - The event object.
+ * It removes the tag from the DOM, and then removes the tag from the list of selected tags.
+ * @param e - the event that triggered the function
  */
 function closeTag(e) {
   let element = e.target;
   element.parentNode.remove(element);
+
+  var item_name_to_remove = element.parentElement.dataset.item; //nom de l'élément enlevé
+  console.log(item_name_to_remove);
+  selectedTags = removeItemFromObjectList(selectedTags, item_name_to_remove);
+  selectedIngredients = removeItemFromList(
+    selectedIngredients,
+    item_name_to_remove
+  );
+  selectedAppliances = removeItemFromList(
+    selectedAppliances,
+    item_name_to_remove
+  );
+  selectedUstensils = removeItemFromList(
+    selectedUstensils,
+    item_name_to_remove
+  );
+  init();
+}
+// remove item_name from Object List
+/**
+ * It takes a list of objects and a string, and returns the list of objects with the object that has a
+ * data-item attribute that matches the string removed.
+ * @param target_list - the list of objects you want to remove the item from
+ * @param item_name - the name of the item to remove
+ * @returns The target_list is being returned.
+ */
+function removeItemFromObjectList(target_list, item_name) {
+  var result = false;
+  var item_to_remove = null;
+  for (let item of target_list) {
+    result = item.dataset.item === item_name;
+    if (result) {
+      item_to_remove = item;
+      break;
+    }
+  }
+  if (item_to_remove) {
+    var index = target_list.indexOf(item_to_remove);
+    if (index > -1) {
+      target_list.splice(index, 1);
+    }
+  }
+  return target_list;
 }
 
+// remove item_name from List
+/**
+ * It takes a list and an item name, and returns the list with the item removed.
+ * @param target_list - the list you want to remove the item from
+ * @param item_name - The name of the item you want to remove from the list.
+ * @returns The target_list is being returned.
+ */
+function removeItemFromList(target_list, item_name) {
+  var index = target_list.indexOf(item_name);
+  if (index > -1) {
+    target_list.splice(index, 1);
+  }
+  return target_list;
+}
 /**
  * gestion des tris
  */
 
+/**
+ * It filters recipes by ingredients.
+ * @param recipesToFilter - an array of objects (recipes)
+ * @returns An array of objects.
+ */
 function filterRecipesByIngredients(recipesToFilter) {
   //Filtre les recettes selon les ingrédients choisis
   let selectedRecipesByIngredients = [];
@@ -368,6 +425,11 @@ function filterRecipesByIngredients(recipesToFilter) {
   return selectedRecipesByIngredients;
 }
 
+/**
+ * It filters the recipes filtered by ingredients, according to the appliance chosen.
+ * @param recipesToFilter - an array of objects (recipes)
+ * @returns An array of objects.
+ */
 function filterRecipesByAppliances(recipesToFilter) {
   //Filtre les recettes filtrées par ingrédients, selon l’appareil choisi
 
@@ -399,6 +461,11 @@ function filterRecipesByAppliances(recipesToFilter) {
   return selectedRecipesByAppliances;
 }
 
+/**
+ * It filters recipes by ustensils, according to the ustensils chosen
+ * @param recipesToFilter - an array of objects (recipes)
+ * @returns An array of objects.
+ */
 function filterRecipesByUstensils(recipesToFilter) {
   //Filtre les recettes filtrées par appareils, selon les ustensiles choisis
   let selectedRecipesByUstensils = [];
@@ -427,26 +494,36 @@ function filterRecipesByUstensils(recipesToFilter) {
   return selectedRecipesByUstensils;
 }
 
-function displayIngredientsList(tableauatrier) {
+/**
+ * It takes an array of objects, loops through each object, then loops through each object's
+ * ingredients array, then pushes each ingredient into a new array, then removes duplicates, then sorts
+ * the array, then passes the array to another function.
+ * @param listToFilter - an array of objects
+ */
+function displayIngredientsList(listToFilter) {
   // console.log(ingredientsArray);
-  //ingredientsContainer.innerHTML = "";
+  listOfIngredients.innerHTML = "";
   let newIngredientsArray = [];
 
-  tableauatrier.forEach((recipe) => {
+  listToFilter.forEach((recipe) => {
     recipe.ingredients.forEach((ingredient) => {
       newIngredientsArray.push(ingredient.ingredient);
       newIngredientsArray = [...new Set(newIngredientsArray)].sort();
-      console.log(newIngredientsArray);
+      //console.log(newIngredientsArray);
     });
   });
-
   createIngredientsList(newIngredientsArray);
 }
 
-function displayAppliancesList(tableauatrier) {
+/**
+ * It takes an array of objects, loops through each object, and pushes the value of the "appliance" key
+ * into a new array. Then it removes duplicates and sorts the array.
+ * @param listToFilter - an array of objects
+ */
+function displayAppliancesList(listToFilter) {
   // console.log(appliancesArray);
   let newAppliancesArray = [];
-  tableauatrier.forEach((recipe) => {
+  listToFilter.forEach((recipe) => {
     newAppliancesArray.push(recipe.appliance);
     newAppliancesArray = [...new Set(newAppliancesArray)].sort();
     //console.log(appliancesList);
@@ -454,10 +531,16 @@ function displayAppliancesList(tableauatrier) {
   createApplianceList(newAppliancesArray);
 }
 
-function displayUstensilsList(tableauatrier) {
-  console.log(ustensilsArray);
+/**
+ * It takes an array of objects, loops through each object, then loops through each object's array of
+ * ustensils, then pushes each ustensil to a new array, then removes duplicates, then sorts the array,
+ * then passes the array to another function.
+ * @param listToFilter - an array of objects (recipes)
+ */
+function displayUstensilsList(listToFilter) {
+  // console.log(ustensilsArray);
   let newUstensilsArray = [];
-  tableauatrier.forEach((recipe) => {
+  listToFilter.forEach((recipe) => {
     recipe.ustensils.forEach((ustensil) => {
       newUstensilsArray.push(ustensil);
       newUstensilsArray = [...new Set(newUstensilsArray)].sort();
@@ -465,4 +548,54 @@ function displayUstensilsList(tableauatrier) {
     });
   });
   createUstensilsList(newUstensilsArray);
+}
+
+/**
+ * filtres par inputSearch
+ */
+ingredientFilter.addEventListener("input", inputFilter);
+applianceFilter.addEventListener("input", inputFilter);
+ustensilFilter.addEventListener("input", inputFilter);
+
+/**
+ * It takes the input value, filters the arrays and creates the lists.
+ * </code>
+ * @param e - the event object
+ */
+function inputFilter(e) {
+  const inputValue = e.target.value.toLowerCase().replace(/\s/g, "");
+  console.log(inputValue);
+
+  //console.log(ingredientsArray);
+  let ingredientChoice = [];
+  console.log(ingredientChoice);
+  let applianceChoice = [];
+  console.log(applianceChoice);
+  let ustensilChoice = [];
+  console.log(ustensilChoice);
+
+  ingredientsArray.filter((ingredient) => {
+    if (ingredient.innerHTML.toLowerCase().includes(inputValue)) {
+      ingredientChoice.push(ingredient.innerHTML);
+    }
+  });
+  // console.log(ingredientChoice);
+
+  appliancesArray.filter((appliance) => {
+    if (appliance.innerHTML.toLowerCase().includes(inputValue)) {
+      applianceChoice.push(appliance.innerHTML);
+    }
+  });
+  console.log(applianceChoice);
+
+  ustensilsArray.filter((ustensil) => {
+    if (ustensil.innerHTML.toLowerCase().includes(inputValue)) {
+      ustensilChoice.push(ustensil.innerHTML);
+    }
+  });
+  console.log(ustensilChoice);
+
+  createIngredientsList(ingredientChoice);
+  createApplianceList(applianceChoice);
+  createUstensilsList(ustensilChoice);
 }
