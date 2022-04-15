@@ -191,8 +191,7 @@ function createIngredientsList(ingredients) {
       if (!inSelectedTags(item.dataset.item)) selectedTags.push(item); // empeche l'affichage en double du tag
       //console.log(selectedTags);
       hideList(listOfIngredients, ingredientFilter, ingredientChevron);
-
-      //filterRecipesByIngredients(recipesArray, selectedIngredients);
+      ingredientFilter.value = "";
       init();
     });
   });
@@ -223,6 +222,7 @@ function createApplianceList(appliances) {
       if (!inSelectedTags(item.dataset.item)) selectedTags.push(item); // empeche l'affichage en double du tag
       //console.log(selectedTags);
       hideList(listOfAppliances, applianceFilter, applianceChevron);
+      applianceFilter.value = "";
       init();
     });
   });
@@ -252,6 +252,7 @@ function createUstensilsList(ustensils) {
       if (!inSelectedTags(item.dataset.item)) selectedTags.push(item); // empeche l'affichage en double du tag
       //console.log(selectedTags);
       hideList(listOfUstensils, ustensilFilter, ustensilChevron);
+      ustensilFilter.value = "";
       init();
     });
   });
@@ -563,16 +564,16 @@ ustensilFilter.addEventListener("input", inputFilter);
  * @param e - the event object
  */
 function inputFilter(e) {
-  const inputValue = e.target.value.toLowerCase().replace(/\s/g, "");
-  console.log(inputValue);
+  const inputValue = e.target.value.toLowerCase();
+  // console.log(inputValue);
 
   //console.log(ingredientsArray);
   let ingredientChoice = [];
-  console.log(ingredientChoice);
+  //console.log(ingredientChoice);
   let applianceChoice = [];
-  console.log(applianceChoice);
+  // console.log(applianceChoice);
   let ustensilChoice = [];
-  console.log(ustensilChoice);
+  //console.log(ustensilChoice);
 
   ingredientsArray.filter((ingredient) => {
     if (ingredient.innerHTML.toLowerCase().includes(inputValue)) {
