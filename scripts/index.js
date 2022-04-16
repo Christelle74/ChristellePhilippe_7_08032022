@@ -8,6 +8,8 @@ const tags = document.querySelector(".selectedTag");
 const ingredientFilter = document.querySelector("#ingredients-filter");
 const applianceFilter = document.querySelector("#appliance-filter");
 const ustensilFilter = document.querySelector("#ustensils-filter");
+const principalSearch = document.querySelector("#recherche");
+//console.log(principalSearch);
 //const filters = document.querySelectorAll(".form-control");
 //console.log(ingredientFilter);
 
@@ -356,10 +358,12 @@ function closeTag(e) {
 function removeItemFromObjectList(target_list, item_name) {
   var result = false;
   var item_to_remove = null;
+
   for (let item of target_list) {
     result = item.dataset.item === item_name;
     if (result) {
       item_to_remove = item;
+
       break;
     }
   }
@@ -369,6 +373,7 @@ function removeItemFromObjectList(target_list, item_name) {
       target_list.splice(index, 1);
     }
   }
+
   return target_list;
 }
 
@@ -557,6 +562,7 @@ function displayUstensilsList(listToFilter) {
 ingredientFilter.addEventListener("input", inputFilter);
 applianceFilter.addEventListener("input", inputFilter);
 ustensilFilter.addEventListener("input", inputFilter);
+principalSearch.addEventListener("input", principalFilter);
 
 /**
  * It takes the input value, filters the arrays and creates the lists.
@@ -599,4 +605,34 @@ function inputFilter(e) {
   createIngredientsList(ingredientChoice);
   createApplianceList(applianceChoice);
   createUstensilsList(ustensilChoice);
+}
+
+function principalFilter(e) {
+  const inputValue = e.target.value.toLowerCase().replace(/\s/g, "");
+  //console.log(inputValue);
+
+  let recipesChoice = [];
+
+  recipesArray.filter((recipe) => {
+    if (
+      recipe.name.toLowerCase().replace(/\s/g, "").includes(inputValue) ||
+      recipe.description
+        .toLowerCase()
+        .replace(/\s/g, "")
+        .includes(inputValue) ||
+      recipe.ingredients.find((elt) =>
+        elt.ingredient.toLowerCase().replace(/\s/g, "").includes(inputValue)
+      )
+    ) {
+      recipesChoice.push(recipe);
+      recipesChoice = [...new Set(recipesChoice)];
+      // return recipesChoice;
+    }
+  });
+  console.log(recipesChoice);
+
+  createRecipesList(recipesChoice);
+  displayIngredientsList(recipesChoice);
+  displayAppliancesList(recipesChoice);
+  displayUstensilsList(recipesChoice);
 }
