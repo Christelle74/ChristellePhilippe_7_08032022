@@ -17,6 +17,7 @@ class CreateIngredientsList {
     );
     listOfIngredients.setAttribute("data-color", "bg-primary");
     listOfIngredients.setAttribute("data-item", this.ingredient);
+    listOfIngredients.setAttribute("data-type", "ingredient");
     listOfIngredients.innerHTML = this.ingredient; //ou `${ingredient}`;
 
     return listOfIngredients;
@@ -39,6 +40,7 @@ class CreateAppliancesList {
     );
     listOfAppliances.setAttribute("data-color", "bg-success");
     listOfAppliances.setAttribute("data-item", this.appliance);
+    listOfAppliances.setAttribute("data-type", "appliance");
     listOfAppliances.innerHTML = this.appliance;
 
     return listOfAppliances;
@@ -62,6 +64,7 @@ class CreateUstensilsList {
     );
     listOfUstensils.setAttribute("data-color", "bg-danger");
     listOfUstensils.setAttribute("data-item", this.ustensil);
+    listOfUstensils.setAttribute("data-type", "ustensil");
     listOfUstensils.innerHTML = this.ustensil;
     //console.log(listOfUstensils);
     return listOfUstensils;

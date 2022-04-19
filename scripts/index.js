@@ -194,6 +194,7 @@ function createIngredientsList(ingredients) {
       //console.log(selectedTags);
       hideList(listOfIngredients, ingredientFilter, ingredientChevron);
       ingredientFilter.value = "";
+      principalSearch.value = "";
       init();
     });
   });
@@ -225,6 +226,7 @@ function createApplianceList(appliances) {
       //console.log(selectedTags);
       hideList(listOfAppliances, applianceFilter, applianceChevron);
       applianceFilter.value = "";
+      principalSearch.value = "";
       init();
     });
   });
@@ -255,6 +257,7 @@ function createUstensilsList(ustensils) {
       //console.log(selectedTags);
       hideList(listOfUstensils, ustensilFilter, ustensilChevron);
       ustensilFilter.value = "";
+      principalSearch.value = "";
       init();
     });
   });
@@ -269,8 +272,7 @@ function createUstensilsList(ustensils) {
 function inSelectedTags(item_name) {
   var result = false;
   selectedTags.forEach((item) => {
-    result = item.dataset.item === item_name;
-    if (result) return;
+    result = result || item.dataset.item === item_name;
   });
   return result;
 }
@@ -290,6 +292,7 @@ function createTag() {
     const tagLi = document.createElement("li");
     const tagColor = tag.dataset.color;
     const tagName = tag.dataset.item;
+    const tagType = tag.dataset.type;
 
     tagLi.classList.add(
       `${tagColor}`,
@@ -310,7 +313,7 @@ function createTag() {
   <img id="close" src="assets/times-circle-regular.svg" alt=""
 />`;
     tagLi.setAttribute("data-item", tagName);
-
+    tagLi.setAttribute("data-type", tagType);
     tags.appendChild(tagLi);
     //console.log(tagLi);
     tagLi.addEventListener("click", closeTag);
@@ -328,23 +331,39 @@ function createTag() {
  */
 function closeTag(e) {
   let element = e.target;
+  // suppression de l'element graphique
   element.parentNode.remove(element);
 
   var item_name_to_remove = element.parentElement.dataset.item; //nom de l'élément enlevé
-  console.log(item_name_to_remove);
+  var item_type_to_remove = element.parentElement.dataset.type; //type de l'élément enlevé
+  // console.log(item_name_to_remove);
   selectedTags = removeItemFromObjectList(selectedTags, item_name_to_remove);
-  selectedIngredients = removeItemFromList(
-    selectedIngredients,
-    item_name_to_remove
-  );
-  selectedAppliances = removeItemFromList(
-    selectedAppliances,
-    item_name_to_remove
-  );
-  selectedUstensils = removeItemFromList(
-    selectedUstensils,
-    item_name_to_remove
-  );
+
+  switch (item_type_to_remove) {
+    case "ingredient":
+      selectedIngredients = removeItemFromList(
+        selectedIngredients,
+        item_name_to_remove
+      );
+
+      break;
+    case "appliance":
+      selectedAppliances = removeItemFromList(
+        selectedAppliances,
+        item_name_to_remove
+      );
+
+      break;
+    case "ustensil":
+      selectedUstensils = removeItemFromList(
+        selectedUstensils,
+        item_name_to_remove
+      );
+      break;
+    default:
+      console.log(`type not found ${expr}.`);
+  }
+
   init();
 }
 // remove item_name from Object List
@@ -359,14 +378,21 @@ function removeItemFromObjectList(target_list, item_name) {
   var result = false;
   var item_to_remove = null;
 
+  // On parcourt la liste des items de target_list (tags selectionnés)
+  // Pour chaque item,"ici tag", si son name est egale au nom recherché, ici item_name
+  // on l'enregistre dans item_to_remove et on sort de la boucle, break.
+  // sinon on va voir l'item suivant
   for (let item of target_list) {
-    result = item.dataset.item === item_name;
+    result = item.innerHTML === item_name;
     if (result) {
       item_to_remove = item;
 
       break;
     }
   }
+
+  // si item_name a été trouvé, donc item_to_remove n'est pas null
+  // on peut donc le supprimer de target list
   if (item_to_remove) {
     var index = target_list.indexOf(item_to_remove);
     if (index > -1) {

@@ -61,17 +61,20 @@ font-family: 'Roboto', sans-serif;*/
  max-height: 50px;
 }
 
+
 .input-group {
   position: relative;
 }
 .opened-container {
   position: relative;
+ 
 }
 .input {
   position: relative;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  
 }
 .chevron {
   position: absolute;
@@ -86,7 +89,7 @@ font-family: 'Roboto', sans-serif;*/
   width: 667px;
   column-count: 3;
   overflow-y: auto;
-  transform-origin: top left 300ms;
+  
 }
 .recipe ul{
   list-style-type: none;
