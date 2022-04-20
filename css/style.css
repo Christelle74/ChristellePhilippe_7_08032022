@@ -655,9 +655,9 @@ progress {
   --bs-gutter-y: 0;
   display: flex;
   flex-wrap: wrap;
-  margin-top: calc(var(--bs-gutter-y) * -1 );
-  margin-right: calc(var(--bs-gutter-x) * -0.5);
-  margin-left: calc(var(--bs-gutter-x) * -0.5);
+  margin-top: calc(-1 * var(--bs-gutter-y));
+  margin-right: calc(-0.5 * var(--bs-gutter-x));
+  margin-left: calc(-0.5 * var(--bs-gutter-x));
 }
 .row > * {
   flex-shrink: 0;
@@ -11259,6 +11259,13 @@ article {
 
 .container {
   max-width: 1440px;
+}
+
+#error {
+  font-size: 1.5rem;
+  width: auto;
+  margin: 2rem auto;
+  color: #D04F4F;
 }
 
 .card {

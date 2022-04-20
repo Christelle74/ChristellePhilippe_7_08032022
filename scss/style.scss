@@ -144,6 +144,14 @@ article{
 .container {
   max-width: 1440px;
 }
+
+#error{
+  font-size: 1.5rem;
+  width: auto;
+  margin:2rem auto;
+  color:#D04F4F;
+  
+}
 .card {
   overflow: hidden;
   font-size: 0.8rem;
@@ -189,3 +197,4 @@ article{
   text-overflow: ellipsis;
   font-size: 12px;
 }
+

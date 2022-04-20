@@ -29,7 +29,7 @@ const listOfAppliances = document.querySelector("#applianceList");
 var recipesArray = []; //tableau de toutes les recettes
 //console.log(recipesArray);
 var ingredientsArray = []; //tableau des ingrédients
-console.log(ingredientsArray);
+//console.log(ingredientsArray);
 var appliancesArray = []; //tableau des appareils
 //console.log(appliancesArray);
 var ustensilsArray = []; //tableau des ustensils
@@ -39,7 +39,7 @@ var tagsArray = []; //tableau contenant tous les tags
 //console.log(tagsArray);
 //var selectedRecipes = []; // tableau recettes triées
 var selectedTags = []; //tableau de tags selectionnés
-console.log(selectedTags);
+//console.log(selectedTags);
 var selectedIngredients = []; //tableau des ingredients selectionnés
 //console.log(selectedIngredients);
 var selectedAppliances = [];
@@ -108,6 +108,7 @@ function init() {
     recipesByAppliances,
     selectedIngredients
   );
+
   createRecipesList(recipesByUstensils);
   createTag();
   displayIngredientsList(recipesByIngredients);
@@ -322,7 +323,7 @@ function createTag() {
   });
   tagsList = Array.from(document.querySelectorAll(".newTag"));
   tagsList = [...new Set(tagsList)];
-  //console.log(tagsList);
+  console.log(tagsList);
 }
 
 /**
@@ -412,9 +413,11 @@ function removeItemFromObjectList(target_list, item_name) {
  */
 function removeItemFromList(target_list, item_name) {
   var index = target_list.indexOf(item_name);
+  //console.log(index);
   if (index > -1) {
     target_list.splice(index, 1);
   }
+  //console.log(target_list);
   return target_list;
 }
 /**
@@ -585,27 +588,23 @@ function displayUstensilsList(listToFilter) {
 /**
  * filtres par inputSearch
  */
-ingredientFilter.addEventListener("input", inputFilter);
-applianceFilter.addEventListener("input", inputFilter);
-ustensilFilter.addEventListener("input", inputFilter);
-principalSearch.addEventListener("input", principalFilter);
+ingredientFilter.addEventListener("input", ingredientInputFilter);
+applianceFilter.addEventListener("input", applianceInputFilter);
+ustensilFilter.addEventListener("input", ustensilInputFilter);
 
 /**
- * It takes the input value, filters the arrays and creates the lists.
- * </code>
+ * The function takes the input value and filters the ingredientsArray to find matches.
+ *
+ * The matches are then pushed into a new array called ingredientChoice.
+ *
+ * The ingredientChoice array is then passed into the createIngredientsList function.
  * @param e - the event object
  */
-function inputFilter(e) {
+function ingredientInputFilter(e) {
   const inputValue = e.target.value.toLowerCase();
   // console.log(inputValue);
-
-  //console.log(ingredientsArray);
   let ingredientChoice = [];
   //console.log(ingredientChoice);
-  let applianceChoice = [];
-  // console.log(applianceChoice);
-  let ustensilChoice = [];
-  //console.log(ustensilChoice);
 
   ingredientsArray.filter((ingredient) => {
     if (ingredient.innerHTML.toLowerCase().includes(inputValue)) {
@@ -614,51 +613,95 @@ function inputFilter(e) {
   });
   // console.log(ingredientChoice);
 
+  createIngredientsList(ingredientChoice);
+}
+
+/**
+ * The function takes the input value and filters the appliancesArray to find matches.
+ *
+ * The matches are then pushed into the applianceChoice array.
+ *
+ * The applianceChoice array is then passed into the createApplianceList function.
+ * @param e - the event object
+ */
+function applianceInputFilter(e) {
+  const inputValue = e.target.value.toLowerCase();
+  // console.log(inputValue);
+
+  let applianceChoice = [];
+  // console.log(applianceChoice);
+
   appliancesArray.filter((appliance) => {
     if (appliance.innerHTML.toLowerCase().includes(inputValue)) {
       applianceChoice.push(appliance.innerHTML);
     }
   });
-  console.log(applianceChoice);
+  //console.log(applianceChoice);
+
+  createApplianceList(applianceChoice);
+}
+
+/**
+ * It takes the input value and filters the ustensilsArray to find the ustensils that match the input
+ * value
+ * @param e - the event object
+ */
+function ustensilInputFilter(e) {
+  const inputValue = e.target.value.toLowerCase();
+  // console.log(inputValue);
+
+  let ustensilChoice = [];
+  //console.log(ustensilChoice);
 
   ustensilsArray.filter((ustensil) => {
     if (ustensil.innerHTML.toLowerCase().includes(inputValue)) {
       ustensilChoice.push(ustensil.innerHTML);
     }
   });
-  console.log(ustensilChoice);
+  //console.log(ustensilChoice);
 
-  createIngredientsList(ingredientChoice);
-  createApplianceList(applianceChoice);
   createUstensilsList(ustensilChoice);
 }
 
+/**
+ * recherche principale
+ */
+principalSearch.addEventListener("input", principalFilter);
+
+/**
+ * It filters the recipesArray according to the input value, and then displays the filtered recipes in
+ * the recipesContainer
+ * @param e - the event object
+ */
 function principalFilter(e) {
   const inputValue = e.target.value.toLowerCase().replace(/\s/g, "");
   //console.log(inputValue);
 
-  let recipesChoice = [];
-
-  recipesArray.filter((recipe) => {
-    if (
-      recipe.name.toLowerCase().replace(/\s/g, "").includes(inputValue) ||
-      recipe.description
-        .toLowerCase()
-        .replace(/\s/g, "")
-        .includes(inputValue) ||
-      recipe.ingredients.find((elt) =>
-        elt.ingredient.toLowerCase().replace(/\s/g, "").includes(inputValue)
-      )
-    ) {
-      recipesChoice.push(recipe);
-      recipesChoice = [...new Set(recipesChoice)];
-      // return recipesChoice;
-    }
-  });
-  console.log(recipesChoice);
-
-  createRecipesList(recipesChoice);
-  displayIngredientsList(recipesChoice);
-  displayAppliancesList(recipesChoice);
-  displayUstensilsList(recipesChoice);
+  if (inputValue.length > 2) {
+    let recipesChoice = [];
+    recipesContainer.innerHTML = "";
+    recipesArray.filter((recipe) => {
+      if (
+        recipe.name.toLowerCase().replace(/\s/g, "").includes(inputValue) ||
+        recipe.description
+          .toLowerCase()
+          .replace(/\s/g, "")
+          .includes(inputValue) ||
+        recipe.ingredients.find((elt) =>
+          elt.ingredient.toLowerCase().replace(/\s/g, "").includes(inputValue)
+        )
+      ) {
+        recipesChoice.push(recipe);
+        recipesChoice = [...new Set(recipesChoice)];
+      }
+    });
+    console.log(recipesChoice);
+    createRecipesList(recipesChoice);
+    displayIngredientsList(recipesChoice);
+    displayAppliancesList(recipesChoice);
+    displayUstensilsList(recipesChoice);
+  } else {
+    recipesContainer.innerHTML =
+      "<p id='error'> Aucune recette ne correspond à votre critère ...vous pouvez, par exemple, rechercher 'tarte aux pommes', 'poisson', etc. </p>";
+  }
 }
