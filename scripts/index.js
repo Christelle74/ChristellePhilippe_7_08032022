@@ -679,7 +679,7 @@ function principalFilter(e) {
 
   if (inputValue.length > 2) {
     let recipesChoice = [];
-    recipesContainer.innerHTML = "";
+
     recipesArray.filter((recipe) => {
       if (
         recipe.name.toLowerCase().replace(/\s/g, "").includes(inputValue) ||
@@ -694,14 +694,18 @@ function principalFilter(e) {
         recipesChoice.push(recipe);
         recipesChoice = [...new Set(recipesChoice)];
       }
+      console.log(recipesChoice);
+      createRecipesList(recipesChoice);
+      displayIngredientsList(recipesChoice);
+      displayAppliancesList(recipesChoice);
+      displayUstensilsList(recipesChoice);
     });
-    console.log(recipesChoice);
-    createRecipesList(recipesChoice);
-    displayIngredientsList(recipesChoice);
-    displayAppliancesList(recipesChoice);
-    displayUstensilsList(recipesChoice);
+
+    if (recipesChoice.length == 0) {
+      recipesContainer.innerHTML =
+        "<p id='error'> Aucune recette ne correspond à votre critère ...vous pouvez, par exemple, rechercher 'tarte aux pommes', 'poisson', etc. </p>";
+    }
   } else {
-    recipesContainer.innerHTML =
-      "<p id='error'> Aucune recette ne correspond à votre critère ...vous pouvez, par exemple, rechercher 'tarte aux pommes', 'poisson', etc. </p>";
+    init();
   }
 }
