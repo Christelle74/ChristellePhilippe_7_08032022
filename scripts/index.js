@@ -673,6 +673,7 @@ principalSearch.addEventListener("input", principalFilter);
  * the recipesContainer
  * @param e - the event object
  */
+console.time("function 1");
 function principalFilter(e) {
   const inputValue = e.target.value.toLowerCase().replace(/\s/g, "");
   //console.log(inputValue);
@@ -709,3 +710,4 @@ function principalFilter(e) {
     init();
   }
 }
+console.timeEnd("function 1");
