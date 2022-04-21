@@ -668,7 +668,7 @@ function ustensilInputFilter(e) {
  */
 
 principalSearch.addEventListener("input", algoPrincipalFilter);
-
+console.time("function 2");
 function algoPrincipalFilter(e) {
   const inputValue = e.target.value.toLowerCase().replace(/\s/g, "");
   //console.log(inputValue);
@@ -707,3 +707,4 @@ function algoPrincipalFilter(e) {
     init();
   }
 }
+console.timeEnd("function 2");
