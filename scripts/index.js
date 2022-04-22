@@ -95,24 +95,24 @@ function hideList(listGroup, input, chevron) {
  * selectedIngredients, then creates the recipes list, the tags, and the lists of ingredients,
  * appliances, and ustensils.
  */
-function init() {
+function init(recipes) {
   const recipesByIngredients = filterRecipesByIngredients(
-    recipesArray,
+    recipes,
     selectedIngredients
   );
   const recipesByAppliances = filterRecipesByAppliances(
     recipesByIngredients,
-    selectedIngredients
+    selectedAppliances
   );
   const recipesByUstensils = filterRecipesByUstensils(
     recipesByAppliances,
-    selectedIngredients
+    selectedUstensils
   );
 
   createRecipesList(recipesByUstensils);
   createTag();
-  displayIngredientsList(recipesByIngredients);
-  displayAppliancesList(recipesByAppliances);
+  displayIngredientsList(recipesByUstensils);
+  displayAppliancesList(recipesByUstensils);
   displayUstensilsList(recipesByUstensils);
 }
 
@@ -125,7 +125,9 @@ async function getRecipes() {
   const res = await fetch("data/recipes.json");
   const { recipes } = await res.json();
   recipesArray = recipes;
-  //console.log(recipesArray);
+  //recipesArray = [...recipes, ...recipes, ...recipes, ...recipes, ...recipes];
+  console.log(recipesArray.length);
+  //console.log(recipesArray)
   createRecipesList(recipes);
 }
 getRecipes();
@@ -196,7 +198,7 @@ function createIngredientsList(ingredients) {
       hideList(listOfIngredients, ingredientFilter, ingredientChevron);
       ingredientFilter.value = "";
       principalSearch.value = "";
-      init();
+      init(recipesArray);
     });
   });
 }
@@ -228,7 +230,7 @@ function createApplianceList(appliances) {
       hideList(listOfAppliances, applianceFilter, applianceChevron);
       applianceFilter.value = "";
       principalSearch.value = "";
-      init();
+      init(recipesArray);
     });
   });
 }
@@ -259,7 +261,7 @@ function createUstensilsList(ustensils) {
       hideList(listOfUstensils, ustensilFilter, ustensilChevron);
       ustensilFilter.value = "";
       principalSearch.value = "";
-      init();
+      init(recipesArray);
     });
   });
 }
@@ -365,7 +367,7 @@ function closeTag(e) {
       console.log(`type not found ${expr}.`);
   }
 
-  init();
+  init(recipesArray);
 }
 // remove item_name from Object List
 /**
@@ -669,6 +671,7 @@ function ustensilInputFilter(e) {
 
 principalSearch.addEventListener("input", algoPrincipalFilter);
 console.time("function 2");
+
 function algoPrincipalFilter(e) {
   const inputValue = e.target.value.toLowerCase().replace(/\s/g, "");
   //console.log(inputValue);
@@ -693,10 +696,8 @@ function algoPrincipalFilter(e) {
         recipesChoice.push(recipe);
         recipesChoice = [...new Set(recipesChoice)];
       }
-      createRecipesList(recipesChoice);
-      displayIngredientsList(recipesChoice);
-      displayAppliancesList(recipesChoice);
-      displayUstensilsList(recipesChoice);
+      console.log(recipesChoice);
+      init(recipesChoice);
     }
 
     if (recipesChoice.length == 0) {
@@ -704,7 +705,7 @@ function algoPrincipalFilter(e) {
         "<p id='error'> Aucune recette ne correspond à votre critère ...vous pouvez, par exemple, rechercher 'tarte aux pommes', 'poisson', etc. </p>";
     }
   } else {
-    init();
+    init(recipesArray);
   }
 }
 console.timeEnd("function 2");
