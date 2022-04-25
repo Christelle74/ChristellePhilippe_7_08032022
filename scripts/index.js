@@ -584,38 +584,6 @@ function filterRecipesByIngredients(recipesToFilter) {
     });
   }
 
-  /*if (selectedIngredients.length === 0) {
-    selectedRecipesByIngredients = recipesToFilter;
-  } else {
-    selectedIngredients.forEach((item) => {
-      let ingredientValue = item.toLowerCase().replace(/\s/g, "");
-      console.log(ingredientValue);
-
-      recipesToFilter.filter((recipe) => {
-        if (
-          recipe.ingredients.find((elt) =>
-            elt.ingredient
-              .toLowerCase()
-              .replace(/\s/g, "")
-              .includes(ingredientValue)
-          ) &&
-          recipe.ingredients.find((elt) =>
-            elt.ingredient
-              .toLowerCase()
-              .replace(/\s/g, "")
-              .includes(ingredientValue)
-          )
-        ) {
-          selectedRecipesByIngredients.push(recipe);
-          selectedRecipesByIngredients = [
-            ...new Set(selectedRecipesByIngredients),
-          ];
-          //console.log(selectedRecipesByIngredients);
-        }
-      });
-    });
-  }*/
-
   return selectedRecipesByIngredients;
 }
 
