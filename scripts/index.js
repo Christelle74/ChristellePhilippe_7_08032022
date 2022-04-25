@@ -226,7 +226,7 @@ async function getRecipes() {
     ...recipes,
     ...recipes,*/,
   ];
-  //console.log(recipesArray.length);
+  //console.log(recipesArray.length);// tests pour 4000 recettes
   //console.log(recipesArray);
   createRecipesList(recipes);
 }
