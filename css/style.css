@@ -11149,6 +11149,7 @@ body {
 
 #search {
   color: white;
+  opacity: 1;
 }
 
 /**font-family: 'DM Sans', sans-serif;
@@ -11189,7 +11190,7 @@ font-family: 'Roboto', sans-serif;*/
 
 .chevron {
   position: absolute;
-  right: 0.5rem;
+  right: 1.2rem;
   top: 1rem;
   cursor: pointer;
 }

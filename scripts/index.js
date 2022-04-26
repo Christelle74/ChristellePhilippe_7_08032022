@@ -34,6 +34,7 @@ var selectedUstensils = [];
 //Listeners
 ingredientFilter.addEventListener("click", (e) => {
   e.preventDefault();
+  //console.log("test");
   displayList(listOfIngredients, ingredientFilter, ingredientChevron);
   hideList(listOfAppliances, applianceFilter, applianceChevron);
   hideList(listOfUstensils, ustensilFilter, ustensilChevron);
@@ -55,6 +56,7 @@ ustensilFilter.addEventListener("click", (e) => {
 chevrons.forEach((chevron) => {
   chevron.addEventListener("click", (e) => {
     e.preventDefault();
+
     hideList(listOfUstensils, ustensilFilter, ustensilChevron);
     hideList(listOfAppliances, applianceFilter, applianceChevron);
     hideList(listOfIngredients, ingredientFilter, ingredientChevron);
@@ -84,6 +86,7 @@ function hideList(listGroup, input, chevron) {
   listGroup.style.display = "none";
   input.style.width = "170px";
   chevron.style.transform = "none";
+  input.value = "";
 }
 
 /** fonction orchestre **/
@@ -123,27 +126,6 @@ async function getRecipes() {
   const { recipes } = await res.json();
   recipesArray = recipes;
   recipesArray = [
-    ...recipes /*,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
     ...recipes,
     ...recipes,
     ...recipes,
@@ -177,6 +159,7 @@ async function getRecipes() {
     ...recipes,
     ...recipes,
     ...recipes,
+
     ...recipes,
     ...recipes,
     ...recipes,
@@ -204,12 +187,6 @@ async function getRecipes() {
     ...recipes,
     ...recipes,
     ...recipes,
-    ...recipes ,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes ,
     ...recipes,
     ...recipes,
     ...recipes,
@@ -224,9 +201,35 @@ async function getRecipes() {
     ...recipes,
     ...recipes,
     ...recipes,
-    ...recipes,*/,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
   ];
-  //console.log(recipesArray.length);// tests pour 4000 recettes
+  console.log(recipesArray.length); // tests pour 4000 recettes
   //console.log(recipesArray);
   createRecipesList(recipes);
 }
@@ -560,6 +563,9 @@ function filterRecipesByIngredients(recipesToFilter) {
       return selectedRecipesByIngredients;
     });
   } else if (selectedIngredients.length > 1) {
+    let ingredientValue = selectedIngredients.map((item) =>
+      item.toLowerCase().replace(/\s/g, "")
+    );
     recipesToFilter.filter((recipe) => {
       if (
         recipe.ingredients.find((elt) =>
