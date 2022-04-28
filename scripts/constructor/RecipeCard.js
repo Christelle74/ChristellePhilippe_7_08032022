@@ -8,6 +8,8 @@ class RecipesCard {
     //console.log(this.ingredients);
     this.time = recipe.time;
     this.description = recipe.description;
+    this.appliance = recipe.appliance.toLowerCase();
+    //console.log(this.appliance);
   }
 
   buildCard() {

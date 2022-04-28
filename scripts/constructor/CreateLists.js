@@ -2,7 +2,7 @@
 class CreateIngredientsList {
   constructor(ingredient) {
     this.ingredient = ingredient;
-    //console.log(this.ingredient);
+    // console.log(this.ingredient);
   }
 
   buildIngredientsList() {
