@@ -28,12 +28,13 @@ var ustensilsArray = []; //tableau des ustensils
 
 var selectedTags = []; //tableau de tags selectionnés
 var selectedIngredients = []; //tableau des ingredients selectionnés
-var selectedAppliances = [];
-var selectedUstensils = [];
+var selectedAppliances = []; // tableau des appareils selectionnés
+var selectedUstensils = []; // tableau des ustensils selectionnés
 
 //Listeners
 ingredientFilter.addEventListener("click", (e) => {
   e.preventDefault();
+  //console.log("test");
   displayList(listOfIngredients, ingredientFilter, ingredientChevron);
   hideList(listOfAppliances, applianceFilter, applianceChevron);
   hideList(listOfUstensils, ustensilFilter, ustensilChevron);
@@ -55,6 +56,7 @@ ustensilFilter.addEventListener("click", (e) => {
 chevrons.forEach((chevron) => {
   chevron.addEventListener("click", (e) => {
     e.preventDefault();
+
     hideList(listOfUstensils, ustensilFilter, ustensilChevron);
     hideList(listOfAppliances, applianceFilter, applianceChevron);
     hideList(listOfIngredients, ingredientFilter, ingredientChevron);
@@ -84,6 +86,7 @@ function hideList(listGroup, input, chevron) {
   listGroup.style.display = "none";
   input.style.width = "170px";
   chevron.style.transform = "none";
+  input.value = "";
 }
 
 /** fonction orchestre **/
@@ -123,6 +126,27 @@ async function getRecipes() {
   const { recipes } = await res.json();
   recipesArray = recipes;
   recipesArray = [
+    ...recipes /*,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
+    ...recipes,
     ...recipes,
     ...recipes,
     ...recipes,
@@ -156,7 +180,6 @@ async function getRecipes() {
     ...recipes,
     ...recipes,
     ...recipes,
-
     ...recipes,
     ...recipes,
     ...recipes,
@@ -204,29 +227,9 @@ async function getRecipes() {
     ...recipes,
     ...recipes,
     ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-  ];
-  //console.log(recipesArray.length);// tests pour 4000 recettes
+    ...recipes*/,
+  ]; // tests pour 5000 recettes
+  console.log(recipesArray.length);
   //console.log(recipesArray);
   createRecipesList(recipes);
 }
@@ -254,11 +257,13 @@ const createAllLists = async () => {
   recipesArray.forEach((recipe) => {
     recipe.ingredients.map((element) => {
       ingredientsArray.push(element.ingredient);
+      //console.log(ingredientsArray);
     });
     appliancesArray.push(recipe.appliance);
-
+    //console.log(appliancesArray);
     recipe.ustensils.map((element) => {
       ustensilsArray.push(element);
+      //console.log(ustensilsArray);
     });
   });
 
@@ -274,7 +279,7 @@ const createAllLists = async () => {
 createAllLists();
 
 /**
- * It creates a list of ingredients from an array of ingredients
+ * It creates a list of ingredients from an array of ingredients.
  * @param ingredients - an array of ingredients
  */
 function createIngredientsList(ingredients) {
@@ -289,15 +294,14 @@ function createIngredientsList(ingredients) {
   //console.log(ingredientsArray);
   ingredientsArray.forEach((item) => {
     item.addEventListener("click", () => {
-      selectedIngredients.push(
-        item.dataset.item.toLowerCase().replace(/\s/g, "")
-      );
-      //console.log(selectedIngredients);
-      if (!inSelectedTags(item.dataset.item)) selectedTags.push(item); // empeche l'affichage en double du tag
-      //console.log(selectedTags);
+      if (!inSelectedTags(item.dataset.item)) {
+        selectedIngredients.push(
+          item.dataset.item.toLowerCase().replace(/\s/g, "")
+        );
+        selectedTags.push(item); // empeche l'affichage en double du tag
+      }
       hideList(listOfIngredients, ingredientFilter, ingredientChevron);
       ingredientFilter.value = "";
-      principalSearch.value = "";
       init(recipesArray);
     });
   });
@@ -323,15 +327,15 @@ function createApplianceList(appliances) {
   appliancesArray.forEach((item) => {
     item.addEventListener("click", () => {
       //console.log("test");
-      selectedAppliances.push(
-        item.dataset.item.toLowerCase().replace(/\s/g, "")
-      );
-      //console.log(selectedAppliances);
-      if (!inSelectedTags(item.dataset.item)) selectedTags.push(item); // empeche l'affichage en double du tag
-      //console.log(selectedTags);
+      if (!inSelectedTags(item.dataset.item)) {
+        selectedAppliances.push(
+          item.dataset.item.toLowerCase().replace(/\s/g, "")
+        );
+        selectedTags.push(item); // empeche l'affichage en double du tag
+      }
+
       hideList(listOfAppliances, applianceFilter, applianceChevron);
       applianceFilter.value = "";
-      principalSearch.value = "";
       init(recipesArray);
     });
   });
@@ -356,19 +360,22 @@ function createUstensilsList(ustensils) {
 
   ustensilsArray.forEach((item) => {
     item.addEventListener("click", () => {
-      selectedUstensils.push(
-        item.dataset.item.toLowerCase().replace(/\s/g, "")
-      );
-      //console.log(selectedUstensils);
-      if (!inSelectedTags(item.dataset.item)) selectedTags.push(item); // empeche l'affichage en double du tag
-      //console.log(selectedTags);
+      if (!inSelectedTags(item.dataset.item)) {
+        selectedUstensils.push(
+          item.dataset.item.toLowerCase().replace(/\s/g, "")
+        );
+        selectedTags.push(item); // empeche l'affichage en double du tag
+      }
       hideList(listOfUstensils, ustensilFilter, ustensilChevron);
       ustensilFilter.value = "";
-      principalSearch.value = "";
       init(recipesArray);
     });
   });
 }
+
+/**
+ * GESTION DES TAGS
+ */
 
 // Check if selectedTags contains item name
 /**
@@ -383,10 +390,6 @@ function inSelectedTags(item_name) {
   });
   return result;
 }
-
-/**
- * GESTION DES TAGS
- */
 
 /**
  * It creates a new tag for each item in the selectedTags array.
@@ -423,13 +426,12 @@ function createTag() {
     tagLi.setAttribute("data-type", tagType);
     tags.appendChild(tagLi);
     //console.log(tagLi);
-    tagLi.addEventListener("click", closeTag);
+    let tagClose = document.querySelectorAll("#close");
+    //console.log(tagClose);
+    tagClose.forEach((tag) => tag.addEventListener("click", closeTag));
 
     return tagLi;
   });
-  tagsList = Array.from(document.querySelectorAll(".newTag"));
-  tagsList = [...new Set(tagsList)];
-  //console.log(tagsList);
 }
 
 /**
@@ -470,9 +472,9 @@ function closeTag(e) {
     default:
       console.log(`type not found ${expr}.`);
   }
-
   init(recipesArray);
 }
+
 // remove item_name from Object List
 /**
  * It takes a list of objects and a string, and returns the list of objects with the object that has a
@@ -497,7 +499,6 @@ function removeItemFromObjectList(target_list, item_name) {
       break;
     }
   }
-
   // si item_name a été trouvé, donc item_to_remove n'est pas null
   // on peut donc le supprimer de target list
   if (item_to_remove) {
@@ -506,7 +507,6 @@ function removeItemFromObjectList(target_list, item_name) {
       target_list.splice(index, 1);
     }
   }
-
   return target_list;
 }
 
@@ -518,7 +518,7 @@ function removeItemFromObjectList(target_list, item_name) {
  * @returns The target_list is being returned.
  */
 function removeItemFromList(target_list, item_name) {
-  var index = target_list.indexOf(item_name);
+  var index = target_list.indexOf(item_name.toLowerCase().replace(/\s/g, ""));
   //console.log(index);
   if (index > -1) {
     target_list.splice(index, 1);
@@ -532,7 +532,7 @@ function removeItemFromList(target_list, item_name) {
  */
 
 /**
- * It filters recipes by ingredients
+ * It filters the recipes according to the ingredients chosen.
  * @param recipesToFilter - an array of objects (recipes)
  * @returns An array of objects.
  */
@@ -541,74 +541,17 @@ function filterRecipesByIngredients(recipesToFilter) {
   let selectedRecipesByIngredients = recipesToFilter;
 
   selectedIngredients.forEach((item) => {
-    //console.log(selectedIngredients);
     selectedRecipesByIngredients = selectedRecipesByIngredients.filter(
-      (recipe) => {
-        recipe.ingredients.find((elt) => {
-          console.log(item, elt.ingredient);
-          elt.ingredient
-            .toLowerCase()
-            .replace(/\s/g, "")
-            .includes(item.toLowerCase());
-          // console.log(elt.ingredient.toLowerCase().replace(/\s/g, ""));
-        });
-      }
+      (recipe) =>
+        recipe.ingredients.find((elt) =>
+          // console.log(item, elt.ingredient);
+          elt.ingredient.toLowerCase().replace(/\s/g, "").includes(item)
+        )
     );
-    console.log(selectedRecipesByIngredients);
+    //console.log(selectedRecipesByIngredients);
   });
-  return selectedRecipesByIngredients;
-  /* let ingredientValue = selectedIngredients.map((item) =>
-    item.toLowerCase().replace(/\s/g, "")
-  );*/
-  //console.log(ingredientValue);
 
-  /* if (selectedIngredients.length === 0) {
-    selectedRecipesByIngredients = recipesToFilter;
-  } else if (selectedIngredients.length === 1) {
-    recipesToFilter.filter((recipe) => {
-      if (
-        recipe.ingredients.find((elt) =>
-          elt.ingredient
-            .toLowerCase()
-            .replace(/\s/g, "")
-            .includes(ingredientValue[0])
-        )
-      ) {
-        selectedRecipesByIngredients.push(recipe);
-        selectedRecipesByIngredients = [
-          ...new Set(selectedRecipesByIngredients),
-        ];
-        //console.log(selectedRecipesByIngredients);
-      }
-      return selectedRecipesByIngredients;
-    });
-  } else if (selectedIngredients.length > 1) {
-    let ingredientValue = selectedIngredients.map((item) =>
-      item.toLowerCase().replace(/\s/g, "")
-    );
-    recipesToFilter.filter((recipe) => {
-      if (
-        recipe.ingredients.find((elt) =>
-          elt.ingredient
-            .toLowerCase()
-            .replace(/\s/g, "")
-            .includes(ingredientValue[0])
-        ) &&
-        recipe.ingredients.find((elt) =>
-          elt.ingredient
-            .toLowerCase()
-            .replace(/\s/g, "")
-            .includes(ingredientValue[1])
-        )
-      ) {
-        selectedRecipesByIngredients.push(recipe);
-        selectedRecipesByIngredients = [
-          ...new Set(selectedRecipesByIngredients),
-        ];
-        //console.log(selectedRecipesByIngredients);
-      }
-    });
-  }*/
+  return selectedRecipesByIngredients;
 }
 
 /**
@@ -623,44 +566,18 @@ function filterRecipesByAppliances(recipesToFilter) {
 
   selectedAppliances.forEach((item) => {
     //console.log(item);
-
     selectedRecipesByAppliances = selectedRecipesByAppliances.filter(
-      (recipe) => {
-        recipe.appliance.toLowerCase().replace(/\s/g, "").includes(item);
-        //console.log(recipe.appliance);
-      }
+      (recipe) =>
+        recipe.appliance.toLowerCase().replace(/\s/g, "").includes(item)
+      //console.log(recipe.appliance);
     );
   });
   return selectedRecipesByAppliances;
-
-  /*if (selectedAppliances.length === 0) {
-    selectedRecipesByAppliances = recipesToFilter;
-  } else {
-    selectedAppliances.forEach((item) => {
-      let applianceValue = item;
-      // console.log(applianceValue);
-
-      recipesToFilter.filter((recipe) => {
-        if (
-          recipe.appliance
-            .toLowerCase()
-            .replace(/\s/g, "")
-            .includes(applianceValue)
-        ) {
-          selectedRecipesByAppliances.push(recipe);
-          selectedRecipesByAppliances = [
-            ...new Set(selectedRecipesByAppliances),
-          ];
-          console.log(selectedRecipesByAppliances);
-        }
-      });
-    });
-  }*/
 }
 
 /**
- * It filters recipes by ustensils, according to the ustensils chosen
- * @param recipesToFilter - an array of objects (recipes)
+ * It filters the recipes by the selected ustensils
+ * @param recipesToFilter - an array of objects, each object is a recipe.
  * @returns An array of objects.
  */
 function filterRecipesByUstensils(recipesToFilter) {
@@ -668,51 +585,13 @@ function filterRecipesByUstensils(recipesToFilter) {
   let selectedRecipesByUstensils = recipesToFilter;
 
   selectedUstensils.forEach((item) => {
-    selectedRecipesByUstensils = selectedRecipesByUstensils.filter((recipe) => {
+    selectedRecipesByUstensils = selectedRecipesByUstensils.filter((recipe) =>
       recipe.ustensils.find((elt) =>
         elt.toLowerCase().replace(/\s/g, "").includes(item)
-      );
-    });
+      )
+    );
   });
   return selectedRecipesByUstensils;
-  /*let selectedRecipesByUstensils = [];
-
-  let ustensilValue = selectedUstensils.map((item) =>
-    item.toLowerCase().replace(/\s/g, "")
-  );
-  //console.log(ustensilValue);
-
-  if (selectedUstensils.length === 0) {
-    selectedRecipesByUstensils = recipesToFilter;
-  } else if (selectedUstensils.length === 1) {
-    recipesToFilter.filter((recipe) => {
-      if (
-        recipe.ustensils.find((elt) =>
-          elt.toLowerCase().replace(/\s/g, "").includes(ustensilValue[0])
-        )
-      ) {
-        selectedRecipesByUstensils.push(recipe);
-        selectedRecipesByUstensils = [...new Set(selectedRecipesByUstensils)];
-        // console.log(selectedRecipesByUstensils);
-      }
-      return selectedRecipesByUstensils;
-    });
-  } else if (selectedUstensils.length > 1) {
-    recipesToFilter.filter((recipe) => {
-      if (
-        recipe.ustensils.find((elt) =>
-          elt.toLowerCase().replace(/\s/g, "").includes(ustensilValue[0])
-        ) &&
-        recipe.ustensils.find((elt) =>
-          elt.toLowerCase().replace(/\s/g, "").includes(ustensilValue[1])
-        )
-      ) {
-        selectedRecipesByUstensils.push(recipe);
-        selectedRecipesByUstensils = [...new Set(selectedRecipesByUstensils)];
-        // console.log(selectedRecipesByUstensils);
-      }
-    });
-  }*/
 }
 
 /**
@@ -722,8 +601,6 @@ function filterRecipesByUstensils(recipesToFilter) {
  * @param listToFilter - an array of objects
  */
 function displayIngredientsList(listToFilter) {
-  // console.log(ingredientsArray);
-  listOfIngredients.innerHTML = "";
   let newIngredientsArray = [];
 
   listToFilter.forEach((recipe) => {
@@ -742,12 +619,11 @@ function displayIngredientsList(listToFilter) {
  * @param listToFilter - an array of objects
  */
 function displayAppliancesList(listToFilter) {
-  // console.log(appliancesArray);
   let newAppliancesArray = [];
+
   listToFilter.forEach((recipe) => {
     newAppliancesArray.push(recipe.appliance);
     newAppliancesArray = [...new Set(newAppliancesArray)].sort();
-    //console.log(appliancesList);
   });
   createApplianceList(newAppliancesArray);
 }
@@ -759,8 +635,8 @@ function displayAppliancesList(listToFilter) {
  * @param listToFilter - an array of objects (recipes)
  */
 function displayUstensilsList(listToFilter) {
-  // console.log(ustensilsArray);
   let newUstensilsArray = [];
+
   listToFilter.forEach((recipe) => {
     recipe.ustensils.forEach((ustensil) => {
       newUstensilsArray.push(ustensil);
@@ -790,14 +666,12 @@ function ingredientInputFilter(e) {
   const inputValue = e.target.value.toLowerCase();
   // console.log(inputValue);
   let ingredientChoice = [];
-  //console.log(ingredientChoice);
 
   ingredientsArray.filter((ingredient) => {
     if (ingredient.innerHTML.toLowerCase().includes(inputValue)) {
       ingredientChoice.push(ingredient.innerHTML);
     }
   });
-  // console.log(ingredientChoice);
 
   createIngredientsList(ingredientChoice);
 }
@@ -815,14 +689,12 @@ function applianceInputFilter(e) {
   // console.log(inputValue);
 
   let applianceChoice = [];
-  // console.log(applianceChoice);
 
   appliancesArray.filter((appliance) => {
     if (appliance.innerHTML.toLowerCase().includes(inputValue)) {
       applianceChoice.push(appliance.innerHTML);
     }
   });
-  //console.log(applianceChoice);
 
   createApplianceList(applianceChoice);
 }
@@ -837,14 +709,12 @@ function ustensilInputFilter(e) {
   // console.log(inputValue);
 
   let ustensilChoice = [];
-  //console.log(ustensilChoice);
 
   ustensilsArray.filter((ustensil) => {
     if (ustensil.innerHTML.toLowerCase().includes(inputValue)) {
       ustensilChoice.push(ustensil.innerHTML);
     }
   });
-  //console.log(ustensilChoice);
 
   createUstensilsList(ustensilChoice);
 }
