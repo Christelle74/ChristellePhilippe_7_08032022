@@ -750,7 +750,7 @@ function algoPrincipalFilter(e) {
         recipesChoice.push(recipe);
         recipesChoice = [...new Set(recipesChoice)];
       }
-      console.log(recipesChoice);
+      // console.log(recipesChoice);
       init(recipesChoice);
     }
 
