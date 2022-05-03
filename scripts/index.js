@@ -732,20 +732,25 @@ function algoPrincipalFilter(e) {
 
   if (inputValue.length > 2) {
     let recipesChoice = [];
-    //recipesContainer.innerHTML = "";
 
     for (let recipe of recipesArray) {
       //console.log(recipesArray);
       //console.log(recipe);
+      for (let i = 0; i < recipe.ingredients.length; i++) {
+        const ingredientName = recipe.ingredients[i].ingredient
+          .toLowerCase()
+          .replace(/\s/g, "");
+        //console.log(ingredientName);
+        if (ingredientName.includes(inputValue)) {
+          recipesChoice.push(recipe);
+          recipesChoice = [...new Set(recipesChoice)];
+          //console.log(recipesChoice);
+        }
+      }
+
       if (
         recipe.name.toLowerCase().replace(/\s/g, "").includes(inputValue) ||
-        recipe.description
-          .toLowerCase()
-          .replace(/\s/g, "")
-          .includes(inputValue) ||
-        recipe.ingredients.find((elt) =>
-          elt.ingredient.toLowerCase().replace(/\s/g, "").includes(inputValue)
-        )
+        recipe.description.toLowerCase().replace(/\s/g, "").includes(inputValue)
       ) {
         recipesChoice.push(recipe);
         recipesChoice = [...new Set(recipesChoice)];
