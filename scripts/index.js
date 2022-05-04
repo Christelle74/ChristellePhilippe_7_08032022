@@ -712,7 +712,6 @@ principalSearch.addEventListener("input", principalFilter);
 console.time("function 1");
 function principalFilter(e) {
   let inputValue = e.target.value.toLowerCase().replace(/\s/g, "");
-  //console.log(inputValue);
 
   if (inputValue.length > 2) {
     let recipesChoice = [];
