@@ -207,28 +207,8 @@ async function getRecipes() {
     ...recipes,
     ...recipes,
     ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes*/,
-  ]; // tests pour 5000 recettes
+    ...recipes */,
+  ]; // tests pour 4000 recettes
   console.log(recipesArray.length);
   //console.log(recipesArray);
   createRecipesList(recipes);
@@ -726,6 +706,10 @@ function ustensilInputFilter(e) {
 principalSearch.addEventListener("input", algoPrincipalFilter);
 console.time("function 2");
 
+/**
+ * It filters the recipesArray according to the input value of the user
+ * @param e - the event object
+ */
 function algoPrincipalFilter(e) {
   const inputValue = e.target.value.toLowerCase().replace(/\s/g, "");
   //console.log(inputValue);
@@ -734,8 +718,6 @@ function algoPrincipalFilter(e) {
     let recipesChoice = [];
 
     for (let recipe of recipesArray) {
-      //console.log(recipesArray);
-      //console.log(recipe);
       for (let i = 0; i < recipe.ingredients.length; i++) {
         const ingredientName = recipe.ingredients[i].ingredient
           .toLowerCase()
