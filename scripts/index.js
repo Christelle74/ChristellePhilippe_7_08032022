@@ -207,28 +207,8 @@ async function getRecipes() {
     ...recipes,
     ...recipes,
     ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes,
-    ...recipes*/,
-  ]; // tests pour 5000 recettes
+    ...recipes,*/,
+  ]; // tests pour 4000 recettes
   console.log(recipesArray.length);
   //console.log(recipesArray);
   createRecipesList(recipes);
