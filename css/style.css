@@ -655,9 +655,7 @@ progress {
   --bs-gutter-y: 0;
   display: flex;
   flex-wrap: wrap;
- /* margin-top: calc(-1 * var(--bs-gutter-y));
-  margin-right: calc(-0.5 * var(--bs-gutter-x));
-  margin-left: calc(-0.5 * var(--bs-gutter-x));*/
+  
 }
 .row > * {
   flex-shrink: 0;
@@ -11316,6 +11314,16 @@ article {
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 12px;
+}
+
+@media screen and (max-width: 850px) {
+  .list-group {
+    max-width: 550px;
+  }
+
+  .bg-danger, .bg-success, .bg-primary {
+    max-width: 550px;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

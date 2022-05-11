@@ -203,3 +203,12 @@ article{
   font-size: 12px;
 }
 
+@media screen and (max-width: 850px)
+{
+.list-group{
+  max-width:550px
+}
+.bg-danger, .bg-success, .bg-primary{
+  max-width:550px
+}
+}
