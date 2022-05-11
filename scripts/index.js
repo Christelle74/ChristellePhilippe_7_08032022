@@ -280,6 +280,8 @@ function createIngredientsList(ingredients) {
         );
         selectedTags.push(item); // empeche l'affichage en double du tag
       }
+
+      console.log(ingredientsArray);
       hideList(listOfIngredients, ingredientFilter, ingredientChevron);
       ingredientFilter.value = "";
       init(recipesArray);
@@ -452,6 +454,7 @@ function closeTag(e) {
     default:
       console.log(`type not found ${expr}.`);
   }
+
   init(recipesArray);
 }
 
@@ -715,7 +718,6 @@ function principalFilter(e) {
 
   if (inputValue.length > 2) {
     let recipesChoice = [];
-
     recipesArray.filter((recipe) => {
       if (
         recipe.name.toLowerCase().replace(/\s/g, "").includes(inputValue) ||
@@ -730,7 +732,8 @@ function principalFilter(e) {
         recipesChoice.push(recipe);
         recipesChoice = [...new Set(recipesChoice)];
       }
-      console.log(recipesChoice);
+      //console.log(recipesChoice);
+
       init(recipesChoice);
     });
 
