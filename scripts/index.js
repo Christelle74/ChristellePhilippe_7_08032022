@@ -690,14 +690,9 @@ function ustensilInputFilter(e) {
 
 /**
  * recherche principale
- */
+ */ console.time("function 1");
 principalSearch.addEventListener("input", principalFilter);
 
-/**
- * principal recipe filter
- * @param recipesToFilter - an array of objects (recipes)
- * @returns An array of objects.
- */
 /**
  * It filters an array of objects based on the value of a search input
  * @param recipesToFilter - an array of objects, each object is a recipe
@@ -730,7 +725,6 @@ function principalRecipesFilter(recipesToFilter) {
   return selectedRecipesBySearch;
 }
 
-console.time("function 1");
 /**
  * It filters the recipesArray based on the value of the input field
  * @param e - the event object
