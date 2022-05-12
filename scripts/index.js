@@ -30,7 +30,7 @@ var selectedTags = []; //tableau de tags selectionnés
 var selectedIngredients = []; //tableau des ingredients selectionnés
 var selectedAppliances = []; // tableau des appareils selectionnés
 var selectedUstensils = []; // tableau des ustensils selectionnés
-//var principalRecipeSearchValue = ""; // requête principe de recherche de recettes
+var principalRecipeSearchValue = ""; // requête principe de recherche de recettes
 var selectedRecipes = []; // tableau des recettes selectionnée par la recherche principale
 
 //Listeners
