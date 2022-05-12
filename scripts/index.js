@@ -99,18 +99,9 @@ function hideList(listGroup, input, chevron) {
  */
 function init(recipes) {
   const recipesBySearch = principalRecipesFilter(recipes);
-  const recipesByIngredients = filterRecipesByIngredients(
-    recipesBySearch,
-    selectedIngredients
-  );
-  const recipesByAppliances = filterRecipesByAppliances(
-    recipesByIngredients,
-    selectedAppliances
-  );
-  const recipesByUstensils = filterRecipesByUstensils(
-    recipesByAppliances,
-    selectedUstensils
-  );
+  const recipesByIngredients = filterRecipesByIngredients(recipesBySearch);
+  const recipesByAppliances = filterRecipesByAppliances(recipesByIngredients);
+  const recipesByUstensils = filterRecipesByUstensils(recipesByAppliances);
 
   createRecipesList(recipesByUstensils);
   createTag();
