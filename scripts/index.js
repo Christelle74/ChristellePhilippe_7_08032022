@@ -86,7 +86,7 @@ function displayList(listGroup, input, chevron) {
  */
 function hideList(listGroup, input, chevron) {
   listGroup.style.display = "none";
-  input.style.width = "170px";
+  input.style.width = "207px";
   chevron.style.transform = "none";
   input.value = "";
 }
