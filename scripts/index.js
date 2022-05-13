@@ -737,6 +737,9 @@ function principalFilter(e) {
     selectedRecipes = principalRecipesFilter(recipesArray);
 
     if (selectedRecipes.length == 0) {
+      listOfIngredients.innerHTML = "";
+      listOfAppliances.innerHTML = "";
+      listOfUstensils.innerHTML = "";
       recipesContainer.innerHTML =
         "<p id='error'> Aucune recette ne correspond à votre critère ...vous pouvez, par exemple, rechercher 'tarte aux pommes', 'poisson', etc. </p>";
     } else init(selectedRecipes);
