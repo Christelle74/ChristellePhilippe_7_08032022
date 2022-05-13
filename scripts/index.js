@@ -99,9 +99,18 @@ function hideList(listGroup, input, chevron) {
  */
 function init(recipes) {
   const recipesBySearch = principalRecipesFilter(recipes);
-  const recipesByIngredients = filterRecipesByIngredients(recipesBySearch);
-  const recipesByAppliances = filterRecipesByAppliances(recipesByIngredients);
-  const recipesByUstensils = filterRecipesByUstensils(recipesByAppliances);
+  const recipesByIngredients = filterRecipesByIngredients(
+    recipesBySearch,
+    selectedIngredients
+  );
+  const recipesByAppliances = filterRecipesByAppliances(
+    recipesByIngredients,
+    selectedAppliances
+  );
+  const recipesByUstensils = filterRecipesByUstensils(
+    recipesByAppliances,
+    selectedUstensils
+  );
 
   createRecipesList(recipesByUstensils);
   createTag();
@@ -712,7 +721,6 @@ function principalRecipesFilter(recipesToFilter) {
       if (ingredientName.includes(principalRecipeSearchValue)) {
         selectedRecipesBySearch.push(recipe);
         selectedRecipesBySearch = [...new Set(selectedRecipesBySearch)];
-        //console.log(recipesChoice);
       }
     }
 
@@ -728,6 +736,7 @@ function principalRecipesFilter(recipesToFilter) {
     ) {
       selectedRecipesBySearch.push(recipe);
       selectedRecipesBySearch = [...new Set(selectedRecipesBySearch)];
+      console.log(selectedRecipesBySearch);
     }
   }
 
@@ -744,11 +753,16 @@ function algoPrincipalFilter(e) {
 
   if (principalRecipeSearchValue.length > 2) {
     selectedRecipes = principalRecipesFilter(recipesArray);
-
-    if (selectedRecipes.length == 0) {
+    console.log(selectedRecipes);
+    if (selectedRecipes.length === 0) {
+      listOfIngredients.innerHTML = "";
+      listOfAppliances.innerHTML = "";
+      listOfUstensils.innerHTML = "";
       recipesContainer.innerHTML =
         "<p id='error'> Aucune recette ne correspond à votre critère ...vous pouvez, par exemple, rechercher 'tarte aux pommes', 'poisson', etc. </p>";
-    } else init(selectedRecipes);
+    } else {
+      init(selectedRecipes);
+    }
   } else {
     selectedRecipes = recipesArray;
     init(selectedRecipes);
